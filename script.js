@@ -1,1341 +1,1016 @@
-/* =========================================================
-   CURSE LEGACY
-   CORE GAME SYSTEM
-   ========================================================= */
+/* ============================================================
+   KAIZEN: ECLIPSE PROTOCOL
+   CORE PROTOTYPE
+   ============================================================ */
 
-"use strict";
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => [...document.querySelectorAll(selector)];
 
-/* =========================================================
-   GAME STATE
-========================================================= */
+/* ============================================================
+   CHARACTER DATABASE
+   ============================================================ */
 
-const Game = {
-  version: "0.1.0",
+const characters = [
 
-  player: {
-    id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
-    name: "PLAYER",
-    level: 1,
-    xp: 0,
-    xpNeeded: 100,
-
-    coins: 1000,
-    gems: 500,
-    energy: 120,
-
-    wins: 0,
-    losses: 0,
-
-    power: 0,
-
-    dailyClaimed: false
+  {
+    id: "kael",
+    name: "Kael Veyron",
+    rarity: "ASCEND",
+    level: 60,
+    maxLevel: 60,
+    power: 98200,
+    hp: 16800,
+    attack: 2450,
+    defense: 1320,
+    speed: 142,
+    element: "VOID",
+    hair: "#10192e",
+    skin: "#d9e5f4",
+    cloak: "#1e3b61",
+    glow: "#64eaff",
+    skill: "Graviton Pierce",
+    ultimate: "Eclipse Dominion",
+    passive: "Void Resonance"
   },
 
-  heroes: [],
-
-  inventory: {
-    items: [],
-    capacity: 100
+  {
+    id: "astra",
+    name: "Astra Nyx",
+    rarity: "ASCEND",
+    level: 60,
+    maxLevel: 60,
+    power: 104500,
+    hp: 15100,
+    attack: 2720,
+    defense: 1080,
+    speed: 158,
+    element: "ASTRAL",
+    hair: "#e9d8ff",
+    skin: "#f1e3e7",
+    cloak: "#5b326e",
+    glow: "#c28cff",
+    skill: "Starfall Thread",
+    ultimate: "Astral Collapse",
+    passive: "Night Crown"
   },
 
-  formation: [null, null, null, null, null],
-
-  stages: {
-    current: 1,
-    highest: 1
+  {
+    id: "ryven",
+    name: "Ryven Korr",
+    rarity: "UR",
+    level: 58,
+    maxLevel: 60,
+    power: 87200,
+    hp: 17300,
+    attack: 2210,
+    defense: 1490,
+    speed: 128,
+    element: "EMBER",
+    hair: "#3a1017",
+    skin: "#d6b2a5",
+    cloak: "#7c202c",
+    glow: "#ff4d6d",
+    skill: "Crimson Break",
+    ultimate: "Blood Sun",
+    passive: "Scarlet Pulse"
   },
 
-  infinity: {
-    floor: 1,
-    highest: 1
+  {
+    id: "nira",
+    name: "Nira Solen",
+    rarity: "UR",
+    level: 55,
+    maxLevel: 60,
+    power: 76400,
+    hp: 18800,
+    attack: 1890,
+    defense: 1710,
+    speed: 116,
+    element: "LUMEN",
+    hair: "#f2f5ff",
+    skin: "#e8d7ca",
+    cloak: "#d8b86a",
+    glow: "#ffe48a",
+    skill: "Radiant Mend",
+    ultimate: "Dawn Sanctuary",
+    passive: "Mercy Field"
   },
 
-  clan: {
-    id: null,
-    name: null,
-    members: [],
-    level: 1,
-    donation: 0,
-    legacy: null
+  {
+    id: "zen",
+    name: "Zen Arclight",
+    rarity: "SSR",
+    level: 52,
+    maxLevel: 60,
+    power: 68100,
+    hp: 14200,
+    attack: 2010,
+    defense: 1130,
+    speed: 150,
+    element: "STORM",
+    hair: "#142c47",
+    skin: "#c8d8df",
+    cloak: "#24587d",
+    glow: "#65c9ff",
+    skill: "Thunder Step",
+    ultimate: "Skybreaker",
+    passive: "Static Drive"
   },
 
-  settings: {
-    music: true,
-    sound: true,
-    autoBattle: false,
-    battleSpeed: 1
+  {
+    id: "mira",
+    name: "Mira Voss",
+    rarity: "SSR",
+    level: 50,
+    maxLevel: 60,
+    power: 64300,
+    hp: 13600,
+    attack: 2150,
+    defense: 1040,
+    speed: 144,
+    element: "FROST",
+    hair: "#b7edff",
+    skin: "#e9f2ff",
+    cloak: "#285b7c",
+    glow: "#9cefff",
+    skill: "Frost Bloom",
+    ultimate: "Absolute Winter",
+    passive: "Cold Focus"
+  },
+
+  {
+    id: "orin",
+    name: "Orin Vale",
+    rarity: "SSR",
+    level: 49,
+    maxLevel: 60,
+    power: 61900,
+    hp: 15900,
+    attack: 1810,
+    defense: 1320,
+    speed: 121,
+    element: "STONE",
+    hair: "#2a2928",
+    skin: "#cfae93",
+    cloak: "#574a3b",
+    glow: "#d9a768",
+    skill: "Titan Grip",
+    ultimate: "World Anchor",
+    passive: "Iron Root"
+  },
+
+  {
+    id: "selene",
+    name: "Selene Vey",
+    rarity: "SSR",
+    level: 47,
+    maxLevel: 60,
+    power: 59000,
+    hp: 12800,
+    attack: 1960,
+    defense: 980,
+    speed: 166,
+    element: "MOON",
+    hair: "#17162e",
+    skin: "#e5d9ed",
+    cloak: "#49396b",
+    glow: "#b68cff",
+    skill: "Moon Sever",
+    ultimate: "Lunar Mirage",
+    passive: "Moonstep"
+  },
+
+  {
+    id: "drax",
+    name: "Drax Fen",
+    rarity: "SR",
+    level: 44,
+    maxLevel: 50,
+    power: 42100,
+    hp: 14700,
+    attack: 1410,
+    defense: 1190,
+    speed: 105,
+    element: "IRON",
+    hair: "#252b32",
+    skin: "#c8b29d",
+    cloak: "#414850",
+    glow: "#9caab8",
+    skill: "Iron Crash",
+    ultimate: "Meteor Fist",
+    passive: "Hard Shell"
+  },
+
+  {
+    id: "lyra",
+    name: "Lyra Quen",
+    rarity: "SR",
+    level: 42,
+    maxLevel: 50,
+    power: 39700,
+    hp: 11900,
+    attack: 1560,
+    defense: 920,
+    speed: 154,
+    element: "WIND",
+    hair: "#dceeff",
+    skin: "#e8d6c9",
+    cloak: "#406a75",
+    glow: "#9eeeff",
+    skill: "Cyclone Arc",
+    ultimate: "Heaven Spiral",
+    passive: "Flow State"
+  },
+
+  {
+    id: "kane",
+    name: "Kane Rho",
+    rarity: "SR",
+    level: 41,
+    maxLevel: 50,
+    power: 38100,
+    hp: 13000,
+    attack: 1510,
+    defense: 1040,
+    speed: 132,
+    element: "SHADOW",
+    hair: "#0e101b",
+    skin: "#b9a59d",
+    cloak: "#29243e",
+    glow: "#795bff",
+    skill: "Shadow Fang",
+    ultimate: "Black Corridor",
+    passive: "Predator"
+  },
+
+  {
+    id: "sera",
+    name: "Sera Vonn",
+    rarity: "SR",
+    level: 40,
+    maxLevel: 50,
+    power: 36600,
+    hp: 12600,
+    attack: 1480,
+    defense: 1010,
+    speed: 126,
+    element: "EMBER",
+    hair: "#a33e42",
+    skin: "#e0c1ae",
+    cloak: "#5f252c",
+    glow: "#ff765f",
+    skill: "Ember Chain",
+    ultimate: "Phoenix Circuit",
+    passive: "Burning Heart"
+  },
+
+  {
+    id: "vex",
+    name: "Vex Orlan",
+    rarity: "R",
+    level: 35,
+    maxLevel: 40,
+    power: 22400,
+    hp: 9800,
+    attack: 880,
+    defense: 710,
+    speed: 110,
+    element: "VOID",
+    hair: "#34335b",
+    skin: "#c7b8b1",
+    cloak: "#2c2b52",
+    glow: "#746cff",
+    skill: "Void Needle",
+    ultimate: "Dark Pulse",
+    passive: "Echo"
+  },
+
+  {
+    id: "ren",
+    name: "Ren Aster",
+    rarity: "R",
+    level: 33,
+    maxLevel: 40,
+    power: 21100,
+    hp: 10400,
+    attack: 820,
+    defense: 750,
+    speed: 98,
+    element: "STONE",
+    hair: "#34291f",
+    skin: "#d6bca7",
+    cloak: "#514338",
+    glow: "#d0a66b",
+    skill: "Stone Palm",
+    ultimate: "Earthfall",
+    passive: "Steady Core"
+  },
+
+  {
+    id: "eira",
+    name: "Eira Nox",
+    rarity: "R",
+    level: 31,
+    maxLevel: 40,
+    power: 20400,
+    hp: 9000,
+    attack: 910,
+    defense: 620,
+    speed: 118,
+    element: "FROST",
+    hair: "#d2fbff",
+    skin: "#e9edf3",
+    cloak: "#345a6b",
+    glow: "#8eeaff",
+    skill: "Ice Needle",
+    ultimate: "Frost Cage",
+    passive: "Chill"
+  },
+
+  {
+    id: "tor",
+    name: "Tor Kain",
+    rarity: "R",
+    level: 30,
+    maxLevel: 40,
+    power: 19700,
+    hp: 11300,
+    attack: 790,
+    defense: 860,
+    speed: 90,
+    element: "IRON",
+    hair: "#171a20",
+    skin: "#bda08e",
+    cloak: "#3c404a",
+    glow: "#9b9da7",
+    skill: "Steel Rush",
+    ultimate: "Breaker Zone",
+    passive: "Guard"
+  },
+
+  {
+    id: "nox",
+    name: "Nox Elian",
+    rarity: "R",
+    level: 29,
+    maxLevel: 40,
+    power: 18300,
+    hp: 8700,
+    attack: 850,
+    defense: 650,
+    speed: 128,
+    element: "SHADOW",
+    hair: "#171020",
+    skin: "#d0b4af",
+    cloak: "#3b204b",
+    glow: "#bc63ff",
+    skill: "Dark Needle",
+    ultimate: "Night Veil",
+    passive: "Fade"
+  },
+
+  {
+    id: "yuri",
+    name: "Yuri Kael",
+    rarity: "SR",
+    level: 43,
+    maxLevel: 50,
+    power: 40800,
+    hp: 12000,
+    attack: 1670,
+    defense: 930,
+    speed: 138,
+    element: "LUMEN",
+    hair: "#f1e5c5",
+    skin: "#ead9cc",
+    cloak: "#725d34",
+    glow: "#ffe29b",
+    skill: "Halo Spear",
+    ultimate: "Solar Gate",
+    passive: "Bright Soul"
+  },
+
+  {
+    id: "cass",
+    name: "Cass Vire",
+    rarity: "SSR",
+    level: 48,
+    maxLevel: 60,
+    power: 60500,
+    hp: 13400,
+    attack: 2040,
+    defense: 1000,
+    speed: 148,
+    element: "POISON",
+    hair: "#1a3227",
+    skin: "#d2c5b4",
+    cloak: "#27523f",
+    glow: "#69e29d",
+    skill: "Venom Thread",
+    ultimate: "Emerald Ruin",
+    passive: "Toxic Mark"
+  },
+
+  {
+    id: "vale",
+    name: "Vale Drin",
+    rarity: "SSR",
+    level: 51,
+    maxLevel: 60,
+    power: 67200,
+    hp: 15200,
+    attack: 2180,
+    defense: 1240,
+    speed: 119,
+    element: "GRAVITY",
+    hair: "#241b37",
+    skin: "#d1b5a6",
+    cloak: "#4e3a72",
+    glow: "#a978ff",
+    skill: "Gravity Crush",
+    ultimate: "Event Horizon",
+    passive: "Mass Lock"
+  },
+
+  {
+    id: "rhea",
+    name: "Rhea Sorn",
+    rarity: "UR",
+    level: 57,
+    maxLevel: 60,
+    power: 82400,
+    hp: 14500,
+    attack: 2390,
+    defense: 1110,
+    speed: 160,
+    element: "TIME",
+    hair: "#d5d9f0",
+    skin: "#ecd9d1",
+    cloak: "#403d68",
+    glow: "#a8b7ff",
+    skill: "Second Sever",
+    ultimate: "Zero Hour",
+    passive: "Temporal Edge"
+  },
+
+  {
+    id: "hajra",
+    name: "Hajra Null",
+    rarity: "ASCEND",
+    level: 60,
+    maxLevel: 60,
+    power: 126000,
+    hp: 21000,
+    attack: 3150,
+    defense: 1680,
+    speed: 135,
+    element: "NULL",
+    hair: "#ffffff",
+    skin: "#e8e8ef",
+    cloak: "#16161d",
+    glow: "#ffffff",
+    skill: "Null Dominion",
+    ultimate: "Endless Silence",
+    passive: "Axiom Break"
+  },
+
+  {
+    id: "oriel",
+    name: "Oriel Vanta",
+    rarity: "UR",
+    level: 56,
+    maxLevel: 60,
+    power: 78800,
+    hp: 16000,
+    attack: 2250,
+    defense: 1290,
+    speed: 131,
+    element: "VOID",
+    hair: "#0c1224",
+    skin: "#d0c5d5",
+    cloak: "#263e6b",
+    glow: "#627dff",
+    skill: "Void Crown",
+    ultimate: "Abyssal Rain",
+    passive: "Black Star"
   }
+];
+
+
+/* ============================================================
+   STATE
+   ============================================================ */
+
+const state = {
+  currentScreen: "homeScreen",
+  floor: 27,
+  gems: 12480,
+  coins: 385700,
+  activeCharacter: characters[0],
+  team: [
+    characters[0],
+    characters[1],
+    characters[2],
+    characters[4],
+    characters[7]
+  ],
+  battle: null,
+  auto: false,
+  audioStarted: false
 };
 
 
-/* =========================================================
-   HERO DATA
-========================================================= */
+/* ============================================================
+   AUDIO ENGINE
+   ============================================================ */
 
-const HERO_DATABASE = [
+let audioContext = null;
+let masterGain = null;
+let musicTimer = null;
 
-  {
-    id: "void_warden",
-    name: "Void Warden",
-    title: "Sonsuzluk Muhafızı",
-    rarity: "UR",
-    element: "VOID",
+function initAudio() {
+  if (state.audioStarted) return;
 
-    level: 1,
-    stars: 1,
-    awakening: 0,
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
 
-    maxLevel: 100,
+  if (!AudioCtx) return;
 
-    hp: 4200,
-    attack: 680,
-    defense: 520,
-    speed: 110,
+  audioContext = new AudioCtx();
+  masterGain = audioContext.createGain();
+  masterGain.gain.value = 0.055;
+  masterGain.connect(audioContext.destination);
 
-    ultimateCost: 100,
+  state.audioStarted = true;
 
-    skills: [
-      {
-        name: "Void Break",
-        damage: 1.25,
-        type: "single"
-      },
-      {
-        name: "Infinite Wall",
-        damage: 0.85,
-        type: "defense"
-      }
-    ],
-
-    ultimate: {
-      name: "Absolute Void",
-      damage: 3.8,
-      type: "ultimate"
-    }
-  },
-
-
-  {
-    id: "blood_reaver",
-    name: "Blood Reaver",
-    title: "Kızıl Cellat",
-    rarity: "UR",
-    element: "BLOOD",
-
-    level: 1,
-    stars: 1,
-    awakening: 0,
-
-    maxLevel: 100,
-
-    hp: 3900,
-    attack: 760,
-    defense: 390,
-    speed: 125,
-
-    ultimateCost: 100,
-
-    skills: [
-      {
-        name: "Crimson Fang",
-        damage: 1.35,
-        type: "single"
-      },
-      {
-        name: "Blood Chain",
-        damage: 1.05,
-        type: "control"
-      }
-    ],
-
-    ultimate: {
-      name: "Crimson Execution",
-      damage: 4.2,
-      type: "ultimate"
-    }
-  },
-
-
-  {
-    id: "shadow_assassin",
-    name: "Shadow Assassin",
-    title: "Gölge Avcısı",
-    rarity: "SSR",
-    element: "SHADOW",
-
-    level: 1,
-    stars: 1,
-    awakening: 0,
-
-    maxLevel: 100,
-
-    hp: 3400,
-    attack: 720,
-    defense: 350,
-    speed: 145,
-
-    ultimateCost: 100,
-
-    skills: [
-      {
-        name: "Shadow Slash",
-        damage: 1.45,
-        type: "single"
-      },
-      {
-        name: "Night Step",
-        damage: 0.95,
-        type: "buff"
-      }
-    ],
-
-    ultimate: {
-      name: "Night Execution",
-      damage: 3.6,
-      type: "ultimate"
-    }
-  },
-
-
-  {
-    id: "storm_sage",
-    name: "Storm Sage",
-    title: "Fırtına Bilgesi",
-    rarity: "SSR",
-    element: "LIGHTNING",
-
-    level: 1,
-    stars: 1,
-    awakening: 0,
-
-    maxLevel: 100,
-
-    hp: 3100,
-    attack: 650,
-    defense: 410,
-    speed: 130,
-
-    ultimateCost: 100,
-
-    skills: [
-      {
-        name: "Thunder Spear",
-        damage: 1.30,
-        type: "single"
-      },
-      {
-        name: "Storm Field",
-        damage: 0.90,
-        type: "aoe"
-      }
-    ],
-
-    ultimate: {
-      name: "Heaven Thunder",
-      damage: 3.5,
-      type: "ultimate"
-    }
-  },
-
-
-  {
-    id: "iron_guardian",
-    name: "Iron Guardian",
-    title: "Çelik Muhafız",
-    rarity: "SR",
-    element: "EARTH",
-
-    level: 1,
-    stars: 1,
-    awakening: 0,
-
-    maxLevel: 100,
-
-    hp: 5200,
-    attack: 430,
-    defense: 700,
-    speed: 80,
-
-    ultimateCost: 100,
-
-    skills: [
-      {
-        name: "Iron Fist",
-        damage: 0.95,
-        type: "single"
-      },
-      {
-        name: "Fortress",
-        damage: 0.40,
-        type: "defense"
-      }
-    ],
-
-    ultimate: {
-      name: "Titan Fortress",
-      damage: 2.5,
-      type: "ultimate"
-    }
-  },
-
-
-  {
-    id: "flame_rebel",
-    name: "Flame Rebel",
-    title: "Alev Asi",
-    rarity: "SR",
-    element: "FIRE",
-
-    level: 1,
-    stars: 1,
-    awakening: 0,
-
-    maxLevel: 100,
-
-    hp: 3000,
-    attack: 590,
-    defense: 360,
-    speed: 118,
-
-    ultimateCost: 100,
-
-    skills: [
-      {
-        name: "Flame Rush",
-        damage: 1.15,
-        type: "single"
-      },
-      {
-        name: "Burning Rain",
-        damage: 0.85,
-        type: "aoe"
-      }
-    ],
-
-    ultimate: {
-      name: "Inferno Burst",
-      damage: 3.1,
-      type: "ultimate"
-    }
-  }
-
-];
-
-
-/* =========================================================
-   ENEMY DATABASE
-========================================================= */
-
-const ENEMY_DATABASE = [
-
-  {
-    id: "cursed_beetle",
-    name: "Cursed Beetle",
-    title: "Lanetli Böcek",
-    rarity: "BOSS",
-    hp: 8000,
-    attack: 450,
-    defense: 250,
-    speed: 70
-  },
-
-  {
-    id: "shadow_wolf",
-    name: "Shadow Wolf",
-    title: "Gölge Kurt",
-    rarity: "BOSS",
-    hp: 9500,
-    attack: 520,
-    defense: 280,
-    speed: 120
-  },
-
-  {
-    id: "void_knight",
-    name: "Void Knight",
-    title: "Boşluk Şövalyesi",
-    rarity: "BOSS",
-    hp: 15000,
-    attack: 700,
-    defense: 500,
-    speed: 95
-  },
-
-  {
-    id: "abyss_beast",
-    name: "Abyss Beast",
-    title: "Uçurum Canavarı",
-    rarity: "BOSS",
-    hp: 22000,
-    attack: 950,
-    defense: 650,
-    speed: 100
-  }
-
-];
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-const $ = (selector) => document.querySelector(selector);
-
-const $$ = (selector) => [
-  ...document.querySelectorAll(selector)
-];
-
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
+  startAmbientMusic();
 }
 
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function deepClone(object) {
-  return JSON.parse(JSON.stringify(object));
-}
-
-function formatNumber(number) {
-  return Number(number || 0).toLocaleString("tr-TR");
-}
-
-
-/* =========================================================
-   SAVE / LOAD
-========================================================= */
-
-const SAVE_KEY = "curse_legacy_save_v1";
-
-function saveGame() {
-
-  try {
-
-    localStorage.setItem(
-      SAVE_KEY,
-      JSON.stringify(Game)
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Save error:",
-      error
-    );
-
-  }
-}
-
-
-function loadGame() {
-
-  try {
-
-    const raw =
-      localStorage.getItem(SAVE_KEY);
-
-    if (!raw) {
-
-      createStarterAccount();
-      return;
-
-    }
-
-    const saved =
-      JSON.parse(raw);
-
-    Object.assign(
-      Game,
-      saved
-    );
-
-    if (!Array.isArray(Game.heroes)) {
-      Game.heroes = [];
-    }
-
-    if (!Array.isArray(Game.formation)) {
-      Game.formation = [
-        null,
-        null,
-        null,
-        null,
-        null
-      ];
-    }
-
-    if (!Game.inventory) {
-      Game.inventory = {
-        items: [],
-        capacity: 100
-      };
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Load error:",
-      error
-    );
-
-    createStarterAccount();
-
-  }
-}
-
-
-/* =========================================================
-   STARTER ACCOUNT
-========================================================= */
-
-function createStarterAccount() {
-
-  Game.heroes = [
-    createHero("shadow_assassin"),
-    createHero("iron_guardian"),
-    createHero("flame_rebel")
-  ];
-
-  Game.formation = [
-    Game.heroes[0].id,
-    Game.heroes[1].id,
-    Game.heroes[2].id,
-    null,
-    null
-  ];
-
-  Game.inventory.items = [
-
-    {
-      id: "coin_pack",
-      type: "currency",
-      name: "Altın",
-      quantity: 1000
-    },
-
-    {
-      id: "hero_exp",
-      type: "material",
-      name: "Kahraman EXP",
-      quantity: 500
-    },
-
-    {
-      id: "awakening_core",
-      type: "material",
-      name: "Uyanış Çekirdeği",
-      quantity: 10
-    },
-
-    {
-      id: "shadow_fragment",
-      type: "fragment",
-      name: "Gölge Parçası",
-      quantity: 20
-    }
-
-  ];
-
-  calculatePlayerPower();
-
-  saveGame();
-
-}
-
-
-/* =========================================================
-   HERO CREATION
-========================================================= */
-
-function createHero(heroId) {
-
-  const template =
-    HERO_DATABASE.find(
-      hero => hero.id === heroId
-    );
-
-  if (!template) {
-    return null;
-  }
-
-  const hero =
-    deepClone(template);
-
-  hero.instanceId =
-    `${hero.id}_${Date.now()}_${Math.random()
-      .toString(36)
-      .slice(2, 8)}`;
-
-  hero.currentHp =
-    hero.hp;
-
-  hero.energy = 0;
-
-  hero.fragments = 0;
-
-  hero.locked = false;
-
-  return hero;
-}
-
-
-/* =========================================================
-   HERO POWER
-========================================================= */
-
-function getHeroPower(hero) {
-
-  if (!hero) {
-    return 0;
-  }
-
-  const base =
-    hero.attack +
-    hero.defense +
-    Math.floor(hero.hp / 10);
-
-  const levelBonus =
-    hero.level * 40;
-
-  const starBonus =
-    hero.stars * 150;
-
-  const awakeningBonus =
-    hero.awakening * 400;
-
-  return Math.floor(
-    base +
-    levelBonus +
-    starBonus +
-    awakeningBonus
-  );
-}
-
-
-function calculatePlayerPower() {
-
-  const power =
-    Game.heroes.reduce(
-      (total, hero) =>
-        total + getHeroPower(hero),
-      0
-    );
-
-  Game.player.power =
-    power;
-
-  return power;
-}
-
-
-/* =========================================================
-   HERO LEVEL UP
-========================================================= */
-
-function levelUpHero(heroId) {
-
-  const hero =
-    Game.heroes.find(
-      h => h.instanceId === heroId
-    );
-
-  if (!hero) {
-    return false;
-  }
-
-  if (hero.level >= hero.maxLevel) {
-    showToast(
-      "Bu kahraman maksimum seviyede."
-    );
-    return false;
-  }
-
-  const cost =
-    hero.level * 250;
-
-  if (Game.player.coins < cost) {
-
-    showToast(
-      "Yeterli altın yok."
-    );
-
-    return false;
-  }
-
-  Game.player.coins -= cost;
-
-  hero.level++;
-
-  hero.attack =
-    Math.floor(hero.attack * 1.055);
-
-  hero.defense =
-    Math.floor(hero.defense * 1.055);
-
-  hero.hp =
-    Math.floor(hero.hp * 1.055);
-
-  hero.currentHp =
-    hero.hp;
-
-  calculatePlayerPower();
-  saveGame();
-
-  renderAll();
-
-  showToast(
-    `${hero.name} seviye ${hero.level} oldu!`
+function tone(freq, duration, type = "sine", volume = .08) {
+  if (!audioContext || !masterGain) return;
+
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+
+  gain.gain.setValueAtTime(volume, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    0.001,
+    audioContext.currentTime + duration
   );
 
-  return true;
+  oscillator.connect(gain);
+  gain.connect(masterGain);
+
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime + duration);
+}
+
+function startAmbientMusic() {
+  if (musicTimer) return;
+
+  const notes = [110, 138.59, 164.81, 123.47];
+  let i = 0;
+
+  musicTimer = setInterval(() => {
+    if (!audioContext) return;
+    tone(notes[i % notes.length], 1.2, "sine", .035);
+    i++;
+  }, 1400);
+}
+
+function sfxAttack() {
+  tone(160, .08, "sawtooth", .09);
+  setTimeout(() => tone(320, .1, "triangle", .06), 40);
+}
+
+function sfxSkill() {
+  tone(280, .12, "triangle", .1);
+  setTimeout(() => tone(560, .18, "sine", .08), 60);
+}
+
+function sfxUltimate() {
+  tone(80, .4, "sawtooth", .14);
+
+  setTimeout(() => tone(160, .35, "triangle", .12), 100);
+  setTimeout(() => tone(320, .45, "sine", .1), 200);
+  setTimeout(() => tone(640, .6, "sine", .08), 300);
+}
+
+function sfxVictory() {
+  tone(392, .15, "triangle", .09);
+  setTimeout(() => tone(523.25, .18, "triangle", .09), 130);
+  setTimeout(() => tone(659.25, .3, "triangle", .1), 260);
 }
 
 
-/* =========================================================
-   HERO AWAKENING
-========================================================= */
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 
-function awakenHero(heroId) {
+function showScreen(screenId) {
 
-  const hero =
-    Game.heroes.find(
-      h => h.instanceId === heroId
-    );
-
-  if (!hero) {
-    return false;
-  }
-
-  const required =
-    20 + hero.awakening * 20;
-
-  if (hero.fragments < required) {
-
-    showToast(
-      `En az ${required} parça gerekiyor.`
-    );
-
-    return false;
-  }
-
-  if (hero.awakening >= 6) {
-
-    showToast(
-      "Maksimum uyanış seviyesine ulaşıldı."
-    );
-
-    return false;
-  }
-
-  hero.fragments -= required;
-
-  hero.awakening++;
-
-  hero.attack =
-    Math.floor(hero.attack * 1.18);
-
-  hero.defense =
-    Math.floor(hero.defense * 1.18);
-
-  hero.hp =
-    Math.floor(hero.hp * 1.18);
-
-  calculatePlayerPower();
-  saveGame();
-
-  renderAll();
-
-  showToast(
-    `${hero.name} uyandırıldı!`
-  );
-
-  return true;
-}
-
-
-/* =========================================================
-   SCREEN SYSTEM
-========================================================= */
-
-let currentScreen =
-  "home";
-
-
-function showScreen(screenName) {
-
-  const target =
-    $(`#screen-${screenName}`);
-
-  if (!target) {
-    return;
-  }
-
-  $$(".screen").forEach(
-    screen => {
-      screen.classList.remove(
-        "active"
-      );
-    }
-  );
-
-  target.classList.add(
-    "active"
-  );
-
-  $$(".nav-item").forEach(
-    item => {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.screen === screenName
-      );
-
-    }
-  );
-
-  currentScreen =
-    screenName;
-
-  closeSideMenu();
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  $$(".screen").forEach(screen => {
+    screen.classList.remove("active");
   });
 
-  renderScreen(
-    screenName
-  );
+  const target = document.getElementById(screenId);
+
+  if (!target) return;
+
+  target.classList.add("active");
+  state.currentScreen = screenId;
+
+  $$(".nav-btn").forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.dataset.screen === screenId
+    );
+  });
+
+  initAudio();
+}
+
+$$("[data-screen]").forEach(button => {
+  button.addEventListener("click", () => {
+    showScreen(button.dataset.screen);
+  });
+});
+
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+let toastTimer;
+
+function toast(message) {
+  const element = $("#toast");
+
+  element.textContent = message;
+  element.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    element.classList.remove("show");
+  }, 2200);
 }
 
 
-function renderScreen(screenName) {
+/* ============================================================
+   CHARACTER CARDS
+   ============================================================ */
 
-  switch (screenName) {
+const rarityColors = {
+  R: "#7f8b9d",
+  SR: "#54aaff",
+  SSR: "#b16cff",
+  UR: "#ffd76b",
+  ASCEND: "#ff5f9f"
+};
 
-    case "home":
-      renderHome();
-      break;
+function renderCharacters(filter = "ALL") {
 
-    case "heroes":
-      renderHeroes();
-      break;
+  const grid = $("#characterGrid");
 
-    case "inventory":
-      renderInventory();
-      break;
+  const filtered = filter === "ALL"
+    ? characters
+    : characters.filter(c => c.rarity === filter);
 
-    case "formation":
-      renderFormation();
-      break;
+  grid.innerHTML = filtered.map(character => {
 
-    case "stages":
-      renderStages();
-      break;
+    const color = rarityColors[character.rarity];
 
-    case "infinity":
-      renderInfinity();
-      break;
+    return `
+      <button
+        class="character-card"
+        style="
+          --art1:${character.cloak};
+          --skin:${character.skin};
+          --hair:${character.hair};
+          --glow:${character.glow};
+          --cloak:${character.cloak};
+        "
+        data-character="${character.id}"
+      >
 
-    case "ranking":
-      renderRanking();
-      break;
+        <div class="card-art">
 
-    case "profile":
-      renderProfile();
-      break;
+          <div
+            class="card-rarity"
+            style="color:${color};border:1px solid ${color}55"
+          >
+            ${character.rarity}
+          </div>
 
-  }
+          <div class="card-level">
+            ${character.level}/${character.maxLevel}
+          </div>
 
-}
+        </div>
 
+        <div class="card-info">
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+          <strong>${character.name}</strong>
 
-function bindNavigation() {
+          <span>
+            ${character.element} • ${character.skill}
+          </span>
 
-  $$("[data-screen]").forEach(
-    element => {
+          <div class="card-stats">
+            <span>HP ${formatNumber(character.hp)}</span>
+            <span class="card-power">
+              ${formatNumber(character.power)}
+            </span>
+          </div>
 
-      element.addEventListener(
-        "click",
-        () => {
+        </div>
 
-          const screen =
-            element.dataset.screen;
+      </button>
+    `;
 
-          showScreen(
-            screen
-          );
+  }).join("");
 
+  $$(".character-card").forEach(card => {
+    card.addEventListener("click", () => {
+
+      const id = card.dataset.character;
+      const character = characters.find(c => c.id === id);
+
+      if (!character) return;
+
+      state.activeCharacter = character;
+
+      toast(
+        `${character.name} • ${character.rarity} • ${character.power.toLocaleString("tr-TR")} güç`
+      );
+
+      if (!state.team.some(c => c.id === character.id)) {
+
+        if (state.team.length < 5) {
+          state.team.push(character);
+          toast(`${character.name} kadroya eklendi.`);
         }
+
+      }
+    });
+  });
+}
+
+$$(".rarity-tab").forEach(tab => {
+
+  tab.addEventListener("click", () => {
+
+    $$(".rarity-tab").forEach(t => t.classList.remove("active"));
+
+    tab.classList.add("active");
+
+    renderCharacters(tab.dataset.rarity);
+  });
+
+});
+
+renderCharacters();
+
+
+/* ============================================================
+   KAIZEN
+   ============================================================ */
+
+function updateKaizenScreen() {
+
+  $("#floorNumber").textContent = state.floor;
+
+  const isBoss = state.floor % 10 === 0;
+
+  if (isBoss) {
+
+    $("#kaizenEnemyType").textContent = "BOSS • ABYSSAL ENTITY";
+
+    $("#kaizenEnemyName").textContent =
+      getBossName(state.floor);
+
+    $("#kaizenDescription").textContent =
+      `${state.floor}. kat. Beşli düşman kadrosunun lideri boss.`;
+
+  } else {
+
+    $("#kaizenEnemyType").textContent = "GÖLGE LEJYONU";
+
+    $("#kaizenEnemyName").textContent =
+      getNormalEnemyName(state.floor);
+
+    $("#kaizenDescription").textContent =
+      `Sonsuz protokolün ${state.floor}. katı.`;
+  }
+}
+
+function getNormalEnemyName(floor) {
+
+  const names = [
+    "Night Warden",
+    "Ash Reaver",
+    "Void Stalker",
+    "Crimson Hound",
+    "Grave Sentinel",
+    "Moon Eater",
+    "Storm Fang"
+  ];
+
+  return names[floor % names.length];
+}
+
+function getBossName(floor) {
+
+  const names = [
+    "Abyss Monarch",
+    "Ruin Seraph",
+    "Eclipse Tyrant",
+    "World Devourer",
+    "Null Emperor"
+  ];
+
+  return names[(floor / 10) % names.length | 0];
+}
+
+$("#kaizenBtn").addEventListener("click", () => {
+  updateKaizenScreen();
+  showScreen("kaizenScreen");
+});
+
+$("#kaizenBattleBtn").addEventListener("click", () => {
+  startBattle();
+});
+
+
+/* ============================================================
+   HOME BUTTONS
+   ============================================================ */
+
+$("#continueBattleBtn").addEventListener("click", () => {
+  startBattle();
+});
+
+$("#schoolBtn").addEventListener("click", () => {
+  showScreen("schoolScreen");
+});
+
+$("#summonBtn").addEventListener("click", () => {
+  initAudio();
+  summon();
+});
+
+
+/* ============================================================
+   SUMMON
+   ============================================================ */
+
+function summon() {
+
+  initAudio();
+
+  const roll = Math.random();
+
+  let pool;
+
+  if (roll > .93) {
+    pool = characters.filter(c =>
+      c.rarity === "ASCEND" || c.rarity === "UR"
+    );
+  } else if (roll > .70) {
+    pool = characters.filter(c =>
+      c.rarity === "SSR"
+    );
+  } else {
+    pool = characters.filter(c =>
+      c.rarity === "SR" || c.rarity === "R"
+    );
+  }
+
+  const result = pool[
+    Math.floor(Math.random() * pool.length)
+  ];
+
+  tone(440, .15, "triangle", .1);
+
+  setTimeout(() => {
+    toast(
+      `NEBULA ÇAĞRISI • ${result.rarity} • ${result.name}`
+    );
+  }, 150);
+
+  state.gems = Math.max(0, state.gems - 300);
+
+  $("#gemCount").textContent =
+    state.gems.toLocaleString("tr-TR");
+}
+
+
+/* ============================================================
+   BATTLE ENGINE
+   ============================================================ */
+
+function createBattleCharacter(character, side, index) {
+
+  const multiplier =
+    side === "enemy"
+      ? 1 + (state.floor * .055)
+      : 1;
+
+  return {
+    ...character,
+
+    side,
+    index,
+
+    maxHP: Math.round(character.hp * multiplier),
+    hp: Math.round(character.hp * multiplier),
+
+    attack: Math.round(character.attack * multiplier),
+    defense: Math.round(character.defense * multiplier),
+
+    energy: 0,
+    alive: true,
+
+    x: 0,
+    y: 0,
+
+    attackAnim: 0,
+    hitFlash: 0,
+    ultimateFlash: 0
+  };
+}
+
+function createBattle() {
+
+  const enemies = [];
+
+  const bossFloor = state.floor % 10 === 0;
+
+  for (let i = 0; i < 5; i++) {
+
+    if (bossFloor && i === 0) {
+
+      enemies.push({
+        id: "boss",
+        name: getBossName(state.floor),
+        rarity: "ASCEND",
+        level: state.floor,
+        maxLevel: 999,
+        power: Math.round(120000 + state.floor * 2500),
+        hp: Math.round(28000 + state.floor * 1400),
+        attack: Math.round(3200 + state.floor * 120),
+        defense: Math.round(1900 + state.floor * 90),
+        speed: 115,
+        element: "BOSS",
+        hair: "#ffffff",
+        skin: "#d9d9e0",
+        cloak: "#17141e",
+        glow: "#ff3f6c",
+        skill: "Abyss Strike",
+        ultimate: "Cataclysm",
+        passive: "Monarch Core"
+      });
+
+    } else {
+
+      enemies.push(
+        characters[
+          (state.floor + i * 3) % characters.length
+        ]
       );
-
     }
-  );
-
-
-  $$("[data-action='continue']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          startCurrentStage
-        );
-
-      }
-    );
-
-
-  $$("[data-action='battle-exit']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            Battle.end(
-              false
-            );
-
-            showScreen(
-              "stages"
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-  $$("[data-action='daily']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          claimDailyReward
-        );
-
-      }
-    );
-
-
-  $$("[data-action='summon-one']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          () => summon(1)
-        );
-
-      }
-    );
-
-
-  $$("[data-action='summon-ten']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          () => summon(10)
-        );
-
-      }
-    );
-
-
-  $$("[data-action='infinity-fight']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          startInfinity
-        );
-
-      }
-    );
-
-
-  $$("[data-action='save-formation']")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          saveFormation,
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   SIDE MENU
-========================================================= */
-
-function openSideMenu() {
-
-  const menu =
-    $("#side-menu");
-
-  const overlay =
-    $("#menu-overlay");
-
-  if (!menu) {
-    return;
   }
 
-  menu.classList.add(
-    "open"
-  );
+  return {
+    player: state.team.map(
+      (c, i) => createBattleCharacter(c, "player", i)
+    ),
 
-  overlay?.classList.add(
-    "visible"
-  );
+    enemy: enemies.map(
+      (c, i) => createBattleCharacter(c, "enemy", i)
+    ),
+
+    selectedEnemy: 0,
+    playerIndex: 0,
+    particles: [],
+    floatingTexts: [],
+    effects: [],
+    winner: null,
+    elapsed: 0
+  };
 }
 
+function startBattle() {
 
-function closeSideMenu() {
+  initAudio();
 
-  const menu =
-    $("#side-menu");
+  state.battle = createBattle();
 
-  const overlay =
-    $("#menu-overlay");
+  showScreen("battleScreen");
 
-  menu?.classList.remove(
-    "open"
-  );
+  $("#battleFloorLabel").textContent = state.floor;
 
-  overlay?.classList.remove(
-    "visible"
-  );
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function renderHome() {
-
-  $("#coins").textContent =
-    formatNumber(
-      Game.player.coins
-    );
-
-  $("#gems").textContent =
-    formatNumber(
-      Game.player.gems
-    );
-
-  $("#energy").textContent =
-    formatNumber(
-      Game.player.energy
-    );
-
-  $("#player-name").textContent =
-    Game.player.name;
-
-  $("#player-level").textContent =
-    Game.player.level;
-
-  $("#player-xp").textContent =
-    Game.player.xp;
-
-  $("#player-xp-needed").textContent =
-    Game.player.xpNeeded;
-
-  const xpPercent =
-    Game.player.xpNeeded > 0
-      ? (
-          Game.player.xp /
-          Game.player.xpNeeded
-        ) * 100
-      : 0;
-
-  const xpBar =
-    $("#player-xp-bar");
-
-  if (xpBar) {
-    xpBar.style.width =
-      `${clamp(xpPercent, 0, 100)}%`;
-  }
-
-  const totalPower =
-    calculatePlayerPower();
-
-  $("#total-power").textContent =
-    formatNumber(
-      totalPower
-    );
-
-}
-
-
-/* =========================================================
-   HERO RENDER
-========================================================= */
-
-function renderHeroes() {
-
-  const list =
-    $("#hero-list");
-
-  if (!list) {
-    return;
-  }
-
-  list.innerHTML = "";
-
-  Game.heroes.forEach(
-    hero => {
-
-      const card =
-        document.createElement(
-          "article"
-        );
-
-      card.className =
-        `hero-card rarity-${hero.rarity.toLowerCase()}`;
-
-      card.innerHTML = `
-
-        <div class="hero-card-glow"></div>
-
-        <div class="hero-art">
-
-          <div class="hero-art-placeholder">
-            ${hero.name
-              .split(" ")
-              .map(word => word[0])
-              .join("")
-              .slice(0, 3)}
-          </div>
-
-          <span class="hero-element">
-            ${hero.element}
-          </span>
-
-          <span class="hero-rarity">
-            ${hero.rarity}
-          </span>
-
-        </div>
-
-
-        <div class="hero-card-info">
-
-          <div class="hero-card-title">
-
-            <div>
-              <h3>${hero.name}</h3>
-              <span>${hero.title}</span>
-            </div>
-
-            <strong>
-              ${formatNumber(
-                getHeroPower(hero)
-              )}
-            </strong>
-
-          </div>
-
-
-          <div class="hero-stars">
-
-            ${renderStars(
-              hero.stars
-            )}
-
-          </div>
-
-
-          <div class="hero-level-row">
-
-            <span>
-              LV. ${hero.level}
-            </span>
-
-            <span>
-              UYANIŞ ${hero.awakening}/6
-            </span>
-
-          </div>
-
-
-          <div class="hero-mini-bar">
-
-            <div
-              style="
-                width:${Math.min(
-                  hero.level,
-                  100
-                )}%;
-              ">
-            </div>
-
-          </div>
-
-
-          <button
-            class="hero-open-button"
-            data-hero-id="${hero.instanceId}">
-
-            DETAY
-
-          </button>
-
-        </div>
-      `;
-
-      list.appendChild(
-        card
-      );
-
-    }
-  );
-
-
-  $$(".hero-open-button")
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            openHeroDetail(
-              button.dataset.heroId
-            );
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-function renderStars(count) {
-
-  let html = "";
-
-  for (
-    let i = 0;
-    i < 6;
-    i++
-  ) {
-
-    html +=
-      `<span class="${
-        i < count
-          ? "filled"
-          : ""
-      }">★</span>`;
-
-  }
-
-  return html;
-}
-
-
-/* =========================================================
-   HERO DETAIL
-========================================================= */
-
-function openHeroDetail(heroId) {
-
-  const hero =
-    Game.heroes.find(
-      h => h.instanceId === heroId
-    );
-
-  if (!hero) {
-    return;
-  }
-
-  const container =
-    $("#hero-detail-content");
-
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = `
-
-    <div class="
-      hero-detail
-      rarity-${hero.rarity.toLowerCase()}
-    ">
-
-      <div class="hero-detail-art">
-
-        <div class="hero-detail-placeholder">
-
-          ${hero.name
-            .split(" ")
-            .map(word => word[0])
-            .join("")}
-
-        </div>
-
-        <div class="hero-detail-rarity">
-          ${hero.rarity}
-        </div>
-
-      </div>
-
-
-      <div class="hero-detail-information">
-
-        <span class="eyebrow">
-          ${hero.element}
-        </span>
-
-        <h2>
-          ${hero.name}
-        </h2>
-
-        <p>
-          ${hero.title}
-        </p>
-
-
-        <div class="detail-stars">
-          ${renderStars(hero.stars)}
-        </div>
-
-
-        <div class="detail-power">
-
-          <span>GENEL GÜÇ</span>
-
-          <strong>
-            ${formatNumber(
-              getHeroPower(hero)
-            )}
-          </strong>
-
-        </div>
-
-
-        <div class="stat-grid">
-
-          <div>
-            <span>HP</span>
-            <strong>
-              ${formatNumber(hero.hp)}
-            </strong>
-          </div>
-
-          <di
+  const boss = 
