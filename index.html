@@ -1,385 +1,658 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jujutsu: Curse Empire</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+  <title>Jujutsu: Curse Empire</title>
 
-body{
-  background:#07070d;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-
-#app{
-  width:100%;
-  max-width:500px;
-  min-height:100vh;
-  margin:auto;
-  background:linear-gradient(180deg,#111124,#07070d);
-}
-
-header{
-  padding:22px 18px;
-  border-bottom:1px solid #292943;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-}
-
-.logo span{
-  color:#9b5cff;
-}
-
-.player{
-  margin-top:15px;
-  padding:15px;
-  background:#18182b;
-  border-radius:16px;
-}
-
-.level{
-  color:#b88cff;
-  margin-top:5px;
-}
-
-.xpbar{
-  height:8px;
-  background:#292943;
-  border-radius:10px;
-  margin-top:10px;
-  overflow:hidden;
-}
-
-.xp{
-  width:35%;
-  height:100%;
-  background:#8b5cf6;
-}
-
-.money{
-  margin-top:10px;
-  color:#ffd43b;
-}
-
-.menu{
-  padding:18px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-button{
-  padding:17px 10px;
-  border:0;
-  border-radius:15px;
-  color:white;
-  background:#19192c;
-  border:1px solid #30304c;
-  font-size:15px;
-  font-weight:bold;
-}
-
-button:active{
-  transform:scale(.96);
-}
-
-.main{
-  padding:0 18px 25px;
-}
-
-.card{
-  background:#18182b;
-  border-radius:18px;
-  padding:18px;
-  margin-top:15px;
-  border:1px solid #292943;
-}
-
-.character{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.power{
-  color:#ff5757;
-}
-
-.hidden{
-  display:none;
-}
-
-.back{
-  margin-top:20px;
-  width:100%;
-  background:#292943;
-}
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="app">
+  <!-- Hareketli arka plan -->
+  <div class="bg">
 
-<header>
+    <div class="anime-bg">
+      <img src="gojo-yuta.jpg" alt="Gojo ve Yuta">
+    </div>
 
-<div class="logo">
-JUJUTSU: <span>CURSE EMPIRE</span>
-</div>
+    <div class="energy energy1"></div>
+    <div class="energy energy2"></div>
+    <div class="energy energy3"></div>
 
-<div class="player">
+    <div class="particle" style="left:10%;animation-duration:8s"></div>
+    <div class="particle" style="left:25%;animation-duration:6s"></div>
+    <div class="particle" style="left:40%;animation-duration:10s"></div>
+    <div class="particle" style="left:55%;animation-duration:7s"></div>
+    <div class="particle" style="left:70%;animation-duration:9s"></div>
+    <div class="particle" style="left:85%;animation-duration:6s"></div>
 
-<b>👤 TUNAHAN</b>
+  </div>
 
-<div class="level">
-Level 1
-</div>
 
-<div class="xpbar">
-<div class="xp"></div>
-</div>
+  <!-- OYUN -->
 
-<div class="money">
-💰 1,000 Yen
-</div>
+  <div id="app">
 
-</div>
+    <div class="content">
 
-</header>
+      <!-- ÜST KISIM -->
 
-<div id="home">
+      <header>
 
-<div class="menu">
+        <div class="logo">
+          JUJUTSU: <span>CURSE EMPIRE</span>
+        </div>
 
-<button onclick="show('profile')">
-👤 Profil
-</button>
+        <div class="online">
+          ● ONLINE WORLD
+        </div>
 
-<button onclick="show('characters')">
-⚔️ Karakterler
-</button>
+      </header>
 
-<button onclick="show('packs')">
-📦 Paketler
-</button>
 
-<button onclick="show('arena')">
-🏆 Arena
-</button>
+      <!-- OYUNCU KARTI -->
 
-<button onclick="show('daily')">
-🎁 Günlük Ödül
-</button>
+      <div class="player-card">
 
-<button onclick="alert('🌍 Dünya sıralaması yakında!')">
-🌍 Dünya Sıralaması
-</button>
+        <div class="player-top">
 
-</div>
+          <div class="avatar">
+            👁️
+          </div>
 
-</div>
+          <div>
 
-<div id="profile" class="main hidden">
+            <div class="player-name">
+              TUNAHAN
+            </div>
 
-<div class="card">
+            <div class="title">
+              👑 Yeni Lanet Büyücüsü
+            </div>
 
-<h2>👤 TUNAHAN</h2>
+          </div>
 
-<p style="margin-top:10px">
-👑 Unvan: Yeni Büyücü
-</p>
+        </div>
 
-<p style="margin-top:8px">
-🏆 Arena: Bronz
-</p>
 
-<p style="margin-top:8px">
-🌍 Dünya: #???
-</p>
+        <div class="level-row">
 
-<p style="margin-top:8px">
-💪 En Güçlü Karakter: Henüz yok
-</p>
+          <span>⭐ LEVEL 1</span>
 
-</div>
+          <span>
+            420 / 1000 XP
+          </span>
 
-<button class="back" onclick="home()">
-⬅️ Geri
-</button>
+        </div>
 
-</div>
 
-<div id="characters" class="main hidden">
+        <div class="xpbar">
 
-<h2>⚔️ Karakterler</h2>
+          <div class="xp"></div>
 
-<div class="card character">
-<div>
-<b>🔴 Sukuna</b>
-<p>Level 1</p>
-</div>
-<div class="power">
-Güç 100
-</div>
-</div>
+        </div>
 
-<div class="card character">
-<div>
-<b>🔵 Gojo</b>
-<p>Level 1</p>
-</div>
-<div class="power">
-Güç 100
-</div>
-</div>
 
-<div class="card character">
-<div>
-<b>👊 Yuji</b>
-<p>Level 1</p>
-</div>
-<div class="power">
-Güç 50
-</div>
-</div>
+        <div class="money-row">
 
-<button class="back" onclick="home()">
-⬅️ Geri
-</button>
+          <div class="money">
+            💰 1,000
+          </div>
 
-</div>
+          <div class="money">
+            💎 250
+          </div>
 
-<div id="packs" class="main hidden">
+          <div class="money">
+            🌀 100
+          </div>
 
-<h2>📦 Paketler</h2>
+        </div>
 
-<div class="card">
+      </div>
 
-<h3>🔥 Cursed Pack</h3>
 
-<p style="margin-top:10px">
-Karakter veya geliştirme eşyası kazan!
-</p>
+      <!-- ANA MENÜ -->
 
-<button style="margin-top:15px;width:100%"
-onclick="openPack()">
-📦 Paket Aç — 100 💎
-</button>
+      <div id="home">
 
-<p id="packResult" style="margin-top:15px"></p>
+        <div class="menu">
 
-</div>
+          <button class="main-btn" onclick="openPage('characters')">
+            ⚔️ KARAKTERLER
+          </button>
 
-<button class="back" onclick="home()">
-⬅️ Geri
-</button>
+          <button onclick="openPage('profile')">
+            👤 PROFİL
+          </button>
 
-</div>
+          <button onclick="openPage('packs')">
+            📦 PAKETLER
+          </button>
 
-<div id="arena" class="main hidden">
+          <button onclick="openPage('arena')">
+            🏆 ARENA
+          </button>
 
-<h2>🏆 Arena</h2>
+          <button onclick="openPage('daily')">
+            🎁 GÜNLÜK
+          </button>
 
-<div class="card">
+          <button onclick="openPage('missions')">
+            📜 GÖREVLER
+          </button>
 
-<p>🎟️ Arena Bileti: 5</p>
+          <button onclick="openPage('collection')">
+            📚 KOLEKSİYON
+          </button>
 
-<p style="margin-top:10px">
-🏆 Arena Puanı: 0
-</p>
+          <button onclick="openPage('ranking')">
+            🌍 DÜNYA SIRALAMASI
+          </button>
 
-<p style="margin-top:10px">
-🥉 Bronz
-</p>
+          <button onclick="toggleMusic()">
+            🔊 MÜZİK
+          </button>
 
-<button style="margin-top:15px;width:100%"
-onclick="alert('Rakip aranıyor...')">
-⚔️ Savaşa Gir
-</button>
+        </div>
 
-</div>
 
-<button class="back" onclick="home()">
-⬅️ Geri
-</button>
+        <!-- HIZLI BİLGİ -->
 
-</div>
+        <div class="quick">
 
-<div id="daily" class="main hidden">
+          <div class="quick-row">
+            <span>🏆 Arena</span>
+            <b>Bronz III</b>
+          </div>
 
-<h2>🎁 Günlük Ödül</h2>
+          <div class="quick-row">
+            <span>🌍 Dünya</span>
+            <b>#12,482</b>
+          </div>
 
-<div class="card">
+          <div class="quick-row">
+            <span>⚔️ En Güçlü</span>
+            <b>Sukuna Lv. 1</b>
+          </div>
 
-<h3>🔥 Gün 1</h3>
+          <div class="quick-row">
+            <span>🎟️ Arena Bileti</span>
+            <b>5</b>
+          </div>
 
-<p style="margin-top:10px">
-💰 1,000 Yen
-</p>
+        </div>
 
-<button style="margin-top:15px;width:100%"
-onclick="alert('🎁 Ödül alındı!')">
-Ödülü Al
-</button>
+      </div>
 
-</div>
 
-<button class="back" onclick="home()">
-⬅️ Geri
-</button>
+      <!-- PROFİL -->
 
-</div>
+      <section id="profile" class="page">
 
-</div>
+        <h2>👤 OYUNCU PROFİLİ</h2>
 
-<script>
+        <div class="player-card">
 
-function hideAll(){
+          <div class="player-top">
 
-document.querySelectorAll(
-"#home,#profile,#characters,#packs,#arena,#daily"
-).forEach(x=>{
-x.classList.add("hidden");
-});
+            <div class="avatar">
+              👁️
+            </div>
 
-}
+            <div>
 
-function show(id){
+              <div class="player-name">
+                TUNAHAN
+              </div>
 
-hideAll();
+              <div class="title">
+                👑 Yeni Lanet Büyücüsü
+              </div>
 
-document.getElementById(id)
-.classList.remove("hidden");
+            </div>
 
-}
+          </div>
 
-function home(){
 
-hideAll();
+          <div class="profile-info">
 
-document.getElementById("home")
-.classList.remove("hidden");
+            <div>⭐ Seviye: <b>1</b></div>
+            <div>🏆 Arena: <b>Bronz III</b></div>
+            <div>🌍 Dünya: <b>#12,482</b></div>
+            <div>⚔️ Galibiyet: <b>0</b></div>
+            <div>💀 Mağlubiyet: <b>0</b></div>
 
-}
+          </div>
 
-function openPack(){
+        </div>
 
-document.getElementById("packResult")
-innerText="🎉 Tebrikler! Paket açma sistemi çalışıyor.";
 
-}
+        <h3 class="section-title">
+          🔥 EN GÜÇLÜ SAVAŞÇI
+        </h3>
 
-</script>
+
+        <div class="character-card prismatic">
+
+          <div class="character-name">
+            SUKUNA
+          </div>
+
+          <div class="character-type">
+            👑 Lanetlerin Kralı
+          </div>
+
+          <div class="character-power">
+            GÜÇ 100
+          </div>
+
+
+          <div class="stats">
+
+            <div class="stat">
+              ❤️ HP: 1,000
+            </div>
+
+            <div class="stat">
+              ⚔️ Güç: 100
+            </div>
+
+            <div class="stat">
+              🌀 Enerji: 500
+            </div>
+
+            <div class="stat">
+              ⚡ Hız: 90
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- KARAKTERLER -->
+
+      <section id="characters" class="page">
+
+        <h2>⚔️ SAVAŞÇILAR</h2>
+
+
+        <div class="character-card">
+
+          <div class="character-name">
+            SUKUNA
+          </div>
+
+          <div class="character-type">
+            👑 Lanetlerin Kralı
+          </div>
+
+          <div class="character-power">
+            GÜÇ 100
+          </div>
+
+          <div class="stats">
+
+            <div class="stat">
+              ⭐ Level 1
+            </div>
+
+            <div class="stat">
+              ❤️ HP 1000
+            </div>
+
+            <div class="stat">
+              ⚔️ ATK 100
+            </div>
+
+            <div class="stat">
+              🌀 CE 500
+            </div>
+
+          </div>
+
+          <button class="upgrade" onclick="upgrade('Sukuna')">
+            ⬆️ YÜKSELT
+          </button>
+
+        </div>
+
+
+        <div class="character-card red">
+
+          <div class="character-name">
+            GOJO
+          </div>
+
+          <div class="character-type">
+            🔵 En Güçlü Büyücü
+          </div>
+
+          <div class="character-power">
+            GÜÇ 95
+          </div>
+
+          <div class="stats">
+
+            <div class="stat">
+              ⭐ Level 1
+            </div>
+
+            <div class="stat">
+              ❤️ HP 900
+            </div>
+
+            <div class="stat">
+              ⚔️ ATK 95
+            </div>
+
+            <div class="stat">
+              🌀 CE 600
+            </div>
+
+          </div>
+
+          <button class="upgrade" onclick="upgrade('Gojo')">
+            ⬆️ YÜKSELT
+          </button>
+
+        </div>
+
+
+        <div class="character-card purple">
+
+          <div class="character-name">
+            YUTA
+          </div>
+
+          <div class="character-type">
+            ⚔️ Özel Sınıf
+          </div>
+
+          <div class="character-power">
+            GÜÇ 85
+          </div>
+
+          <div class="stats">
+
+            <div class="stat">
+              ⭐ Level 1
+            </div>
+
+            <div class="stat">
+              ❤️ HP 850
+            </div>
+
+            <div class="stat">
+              ⚔️ ATK 85
+            </div>
+
+            <div class="stat">
+              🌀 CE 700
+            </div>
+
+          </div>
+
+          <button class="upgrade" onclick="upgrade('Yuta')">
+            ⬆️ YÜKSELT
+          </button>
+
+        </div>
+
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- PAKETLER -->
+
+      <section id="packs" class="page">
+
+        <h2>📦 LANET PAKETLERİ</h2>
+
+        <div class="reward">
+
+          <div class="reward-icon">
+            📦
+          </div>
+
+          <h3>
+            CURSED LEGEND PACK
+          </h3>
+
+          <p>
+            Nadir savaşçı veya özel eşya kazan!
+          </p>
+
+          <p class="gem-price">
+            💎 100 Cursed Gem
+          </p>
+
+          <button class="upgrade" onclick="openPack()">
+            ✨ PAKETİ AÇ
+          </button>
+
+          <div id="packResult"></div>
+
+        </div>
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- ARENA -->
+
+      <section id="arena" class="page">
+
+        <h2>🏆 ARENA</h2>
+
+        <div class="rank-box">
+
+          <div class="rank">
+            BRONZ III
+          </div>
+
+          <div class="points">
+            🏆 0 ARENA PUANI
+          </div>
+
+          <p>
+            🎟️ 5 Arena Bileti
+          </p>
+
+          <button class="upgrade" onclick="arenaFight()">
+            ⚔️ RAKİP BUL
+          </button>
+
+          <div id="arenaResult"></div>
+
+        </div>
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- GÜNLÜK ÖDÜL -->
+
+      <section id="daily" class="page">
+
+        <h2>🎁 GÜNLÜK ÖDÜL</h2>
+
+        <div class="reward">
+
+          <div class="reward-icon">
+            🎁
+          </div>
+
+          <h2>
+            GÜN 1
+          </h2>
+
+          <p>
+            💰 1,000 Yen
+          </p>
+
+          <button class="upgrade" onclick="dailyReward()">
+            🎁 ÖDÜLÜ AL
+          </button>
+
+        </div>
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- GÖREVLER -->
+
+      <section id="missions" class="page">
+
+        <h2>📜 GÜNLÜK GÖREVLER</h2>
+
+        <div class="quick">
+
+          <div class="quick-row">
+            <span>⚔️ 1 savaş yap</span>
+            <b>0/1</b>
+          </div>
+
+          <div class="quick-row">
+            <span>📦 1 paket aç</span>
+            <b>0/1</b>
+          </div>
+
+          <div class="quick-row">
+            <span>⭐ 100 XP kazan</span>
+            <b>0/100</b>
+          </div>
+
+          <div class="quick-row">
+            <span>🏆 Arena kazan</span>
+            <b>0/1</b>
+          </div>
+
+        </div>
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- KOLEKSİYON -->
+
+      <section id="collection" class="page">
+
+        <h2>📚 KOLEKSİYON</h2>
+
+        <div class="reward">
+
+          <h2>
+            3 / ??? SAVAŞÇI
+          </h2>
+
+          <p>
+            🔓 3 Koleksiyon Kartı Açıldı
+          </p>
+
+          <p>
+            🌈 Prismatic kartlar keşfedilmeyi bekliyor...
+          </p>
+
+        </div>
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+
+      <!-- DÜNYA SIRALAMASI -->
+
+      <section id="ranking" class="page">
+
+        <h2>🌍 DÜNYA SIRALAMASI</h2>
+
+        <div class="rank-box">
+
+          <div class="rank">
+            #12,482
+          </div>
+
+          <div class="points">
+            🏆 0 Arena Puanı
+          </div>
+
+          <p>
+            🥉 Bronz III
+          </p>
+
+        </div>
+
+        <div class="quick">
+
+          <div class="quick-row">
+            <span>🥇 #1</span>
+            <b>Oyuncu yakında</b>
+          </div>
+
+          <div class="quick-row">
+            <span>🥈 #2</span>
+            <b>Oyuncu yakında</b>
+          </div>
+
+          <div class="quick-row">
+            <span>🥉 #3</span>
+            <b>Oyuncu yakında</b>
+          </div>
+
+        </div>
+
+        <button class="back" onclick="home()">
+          ⬅️ ANA MENÜ
+        </button>
+
+      </section>
+
+    </div>
+
+  </div>
+
+
+  <!-- MÜZİK -->
+
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script src="script.js"></script>
 
 </body>
-</html>
+  </html>
