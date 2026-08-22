@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jujutsu: Curse Empire</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #080810;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100vh;
+      padding: 25px 18px;
+      background: linear-gradient(180deg, #111122, #07070d);
+      text-align: center;
+    }
+
+    .logo {
+      margin-top: 70px;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .menu {
+      margin-top: 60px;
+      display: grid;
+      gap: 14px;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 17px;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #5b21b6, #7c3aed);
+      box-shadow: 0 5px 20px rgba(124, 58, 237, .25);
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(.97);
+    }
+
+    .profile {
+      margin-top: 45px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .level {
+      color: #c4b5fd;
+      margin-top: 6px;
+    }
+
+    .currency {
+      margin-top: 12px;
+      color: #facc15;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="game">
+
+    <div class="logo">
+      CURSE EMPIRE
+    </div>
+
+    <div class="subtitle">
+      Jujutsu Online RPG
+    </div>
+
+    <div class="profile">
+      <h2>👤 TUNAHAN</h2>
+      <div class="level">Level 1</div>
+      <div class="currency">💰 1,000 Yen</div>
+    </div>
+
+    <div class="menu">
+      <button onclick="startGame()">⚔️ OYNA</button>
+      <button onclick="profile()">👤 PROFİL</button>
+      <button onclick="characters()">🧑‍🎤 KARAKTERLER</button>
+      <button onclick="packs()">📦 PAKETLER</button>
+      <button onclick="arena()">🏆 ARENA</button>
+    </div>
+
+  </div>
+
+  <script>
+    function startGame() {
+      alert("🔥 Curse Empire başlıyor!");
+    }
+
+    function profile() {
+      alert("👤 Profil sistemi yakında!");
+    }
+
+    function characters() {
+      alert("🧑‍🎤 Karakter sistemi yakında!");
+    }
+
+    function packs() {
+      alert("📦 Paket sistemi yakında!");
+    }
+
+    function arena() {
+      alert("🏆 Arena sistemi yakında!");
+    }
+  </script>
+
+</body>
+</html>
