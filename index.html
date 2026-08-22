@@ -3,1019 +3,550 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <meta name="theme-color" content="#050509">
-  <meta name="description" content="Dark fantasy tactical RPG">
-
-  <title>CURSE LEGACY</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#070a12">
+  <title>KAIZEN: Eclipse Protocol</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- =====================================================
-       GLOBAL BACKGROUND
-  ====================================================== -->
+<div id="orientationWarning">
+  <div class="rotate-icon">↻</div>
+  <h2>YATAY OYNA</h2>
+  <p>En iyi deneyim için cihazını yatay konuma çevir.</p>
+</div>
 
-  <div id="game-background">
+<div id="app">
 
-    <div class="bg-gradient"></div>
-    <div class="bg-vignette"></div>
-
-    <div class="bg-orb orb-blue"></div>
-    <div class="bg-orb orb-purple"></div>
-    <div class="bg-orb orb-red"></div>
-
-    <div id="particles"></div>
-
-    <div class="background-symbol symbol-one">◈</div>
-    <div class="background-symbol symbol-two">◇</div>
-    <div class="background-symbol symbol-three">✦</div>
-
+  <div id="backgroundFX">
+    <div class="stars"></div>
+    <div class="nebula nebula-a"></div>
+    <div class="nebula nebula-b"></div>
+    <div class="grid-floor"></div>
   </div>
 
-
-  <!-- =====================================================
-       GAME ROOT
-  ====================================================== -->
-
-  <div id="game">
-
-    <!-- ===================================================
-         TOP BAR
-    ==================================================== -->
-
-    <header id="topbar">
-
-      <button
-        class="icon-button"
-        id="menuButton"
-        aria-label="Menü">
-        ☰
-      </button>
-
-      <div id="top-player">
-
-        <div id="mini-avatar">
-          <div class="avatar-glow"></div>
-          <span>CL</span>
-        </div>
-
-        <div class="player-information">
-
-          <div
-            id="player-name"
-            class="player-name">
-            PLAYER
-          </div>
-
-          <div class="player-level">
-            LV.
-            <span id="player-level">1</span>
-          </div>
-
-        </div>
-
-        <div class="top-xp">
-
-          <div class="xp-label">
-            <span>EXP</span>
-            <span>
-              <b id="player-xp">0</b> /
-              <b id="player-xp-needed">100</b>
-            </span>
-          </div>
-
-          <div class="xp-track">
-            <div
-              id="player-xp-bar"
-              class="xp-fill">
-            </div>
-          </div>
-
-        </div>
-
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">K</div>
+      <div>
+        <strong>KAIZEN</strong>
+        <span>ECLOSURE PROTOCOL</span>
       </div>
+    </div>
 
-
-      <div id="resources">
-
-        <div class="resource">
-          <span class="resource-icon coin">◆</span>
-          <span id="coins">1,000</span>
-          <button
-            class="resource-plus"
-            data-resource="coins">
-            +
-          </button>
-        </div>
-
-        <div class="resource">
-          <span class="resource-icon gem">◇</span>
-          <span id="gems">500</span>
-          <button
-            class="resource-plus"
-            data-resource="gems">
-            +
-          </button>
-        </div>
-
-        <div class="resource">
-          <span class="resource-icon energy">✦</span>
-          <span id="energy">120</span>
-        </div>
-
+    <div class="player-mini">
+      <div class="avatar-mini">A</div>
+      <div class="player-info">
+        <strong>Arden</strong>
+        <span>Lv. 18 • 42,850 GÜÇ</span>
       </div>
-
-    </header>
-
-
-    <!-- ===================================================
-         MAIN CONTENT
-    ==================================================== -->
-
-    <main id="main-content">
-
-
-      <!-- ===============================================
-           HOME
-      ================================================ -->
-
-      <section
-        id="screen-home"
-        class="screen active">
-
-        <div class="home-hero">
-
-          <div class="hero-background"></div>
-          <div class="hero-light"></div>
-
-          <div class="hero-content">
-
-            <div class="hero-tag">
-              SEASON I
-            </div>
-
-            <h1>
-              CURSE<br>
-              <span>LEGACY</span>
-            </h1>
-
-            <p>
-              Gücünü uyandır. Takımını kur.
-              Lanet dünyasının zirvesine çık.
-            </p>
-
-            <button
-              class="primary-button hero-button"
-              data-action="continue">
-
-              <span class="button-icon">▶</span>
-              SAVAŞA DEVAM ET
-
-            </button>
-
-          </div>
-
-          <div class="hero-character">
-
-            <div class="character-aura"></div>
-
-            <div class="hero-character-placeholder">
-              <span>LEGACY</span>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- HOME QUICK ACTIONS -->
-
-        <div class="home-grid">
-
-          <button
-            class="home-card"
-            data-screen="heroes">
-
-            <div class="home-card-art heroes-art">
-              ⚔
-            </div>
-
-            <div>
-              <strong>KAHRAMANLAR</strong>
-              <small>Takımını güçlendir</small>
-            </div>
-
-          </button>
-
-
-          <button
-            class="home-card"
-            data-screen="inventory">
-
-            <div class="home-card-art inventory-art">
-              ◈
-            </div>
-
-            <div>
-              <strong>ENVANTER</strong>
-              <small>Eşyalarını yönet</small>
-            </div>
-
-          </button>
-
-
-          <button
-            class="home-card"
-            data-screen="formation">
-
-            <div class="home-card-art formation-art">
-              ◆
-            </div>
-
-            <div>
-              <strong>DİZİLİŞ</strong>
-              <small>5 kişilik takım</small>
-            </div>
-
-          </button>
-
-
-          <button
-            class="home-card"
-            data-screen="summon">
-
-            <div class="home-card-art summon-art">
-              ✦
-            </div>
-
-            <div>
-              <strong>ÇAĞIRMA</strong>
-              <small>Yeni kahramanlar</small>
-            </div>
-
-          </button>
-
-        </div>
-
-
-        <!-- DAILY -->
-
-        <div class="section-title">
-          <span>GÜNLÜK ÖDÜL</span>
-          <small>BUGÜN</small>
-        </div>
-
-        <div class="daily-card">
-
-          <div class="daily-icon">
-            ✦
-          </div>
-
-          <div class="daily-info">
-            <strong>Günün Ödülü</strong>
-            <span>500 Altın + Gelişim Malzemesi</span>
-          </div>
-
-          <button
-            class="small-button"
-            data-action="daily">
-
-            AL
-
-          </button>
-
-        </div>
-
-
-        <!-- HOME NEWS -->
-
-        <div class="section-title">
-          <span>AKTİF ETKİNLİK</span>
-          <small>YENİ</small>
-        </div>
-
-        <div class="event-card">
-
-          <div class="event-content">
-
-            <span class="event-label">
-              INFINITY KAIZEN
-            </span>
-
-            <h3>
-              SINIRSIZ KAT
-            </h3>
-
-            <p>
-              Daha yüksek katlara çık.
-              Daha güçlü düşmanlarla savaş.
-            </p>
-
-            <button
-              class="secondary-button"
-              data-screen="infinity">
-
-              KEŞFET
-
-            </button>
-
-          </div>
-
-          <div class="event-art">
-            ∞
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           HEROES
-      ================================================ -->
-
-      <section
-        id="screen-heroes"
-        class="screen">
-
-        <div class="screen-header">
-
-          <div>
-            <span class="eyebrow">
-              COLLECTION
-            </span>
-
-            <h2>KAHRAMANLAR</h2>
-
-            <p>
-              Savaşçılarını geliştir ve gerçek güçlerini uyandır.
-            </p>
-          </div>
-
-          <div class="header-stat">
-            <span>GÜÇ</span>
-            <strong id="total-power">0</strong>
-          </div>
-
-        </div>
-
-
-        <div class="filter-tabs">
-
-          <button class="filter active">
-            TÜMÜ
-          </button>
-
-          <button class="filter">
-            UR
-          </button>
-
-          <button class="filter">
-            SSR
-          </button>
-
-          <button class="filter">
-            SR
-          </button>
-
-          <button class="filter">
-            PARÇA
-          </button>
-
-        </div>
-
-
-        <div
-          id="hero-list"
-          class="hero-list">
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           HERO DETAIL
-      ================================================ -->
-
-      <section
-        id="screen-hero-detail"
-        class="screen">
-
-        <button
-          class="back-button"
-          data-screen="heroes">
-
-          ← KAHRAMANLAR
-
-        </button>
-
-        <div
-          id="hero-detail-content">
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           INVENTORY
-      ================================================ -->
-
-      <section
-        id="screen-inventory"
-        class="screen">
-
-        <div class="screen-header">
-
-          <div>
-            <span class="eyebrow">
-              STORAGE
-            </span>
-
-            <h2>ENVANTER</h2>
-
-            <p>
-              Kazandığın tüm kaynakları burada yönet.
-            </p>
-          </div>
-
-          <div class="inventory-count">
-            <span id="inventory-used">0</span>
-            /
-            <span id="inventory-capacity">100</span>
-          </div>
-
-        </div>
-
-
-        <div class="inventory-tabs">
-
-          <button class="inventory-tab active">
-            TÜMÜ
-          </button>
-
-          <button class="inventory-tab">
-            PARÇA
-          </button>
-
-          <button class="inventory-tab">
-            EKİPMAN
-          </button>
-
-          <button class="inventory-tab">
-            MALZEME
-          </button>
-
-          <button class="inventory-tab">
-            SANDIK
-          </button>
-
-        </div>
-
-
-        <div
-          id="inventory-grid"
-          class="inventory-grid">
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           FORMATION
-      ================================================ -->
-
-      <section
-        id="screen-formation"
-        class="screen">
-
-        <div class="screen-header">
-
-          <div>
-            <span class="eyebrow">
-              BATTLE FORMATION
-            </span>
-
-            <h2>DİZİLİŞ</h2>
-
-            <p>
-              Ön sıraya 2, arka sıraya 3 kahraman yerleştir.
-            </p>
-          </div>
-
-          <div class="header-stat">
-            <span>TAKIM GÜCÜ</span>
-            <strong id="formation-power">0</strong>
-          </div>
-
-        </div>
-
-
-        <div class="formation-arena">
-
-          <div class="formation-row front-row">
-
-            <div
-              class="formation-slot"
-              data-slot="0">
-
-              <span>1</span>
-              <div class="slot-empty">+</div>
-
-            </div>
-
-            <div
-              class="formation-slot"
-              data-slot="1">
-
-              <span>2</span>
-              <div class="slot-empty">+</div>
-
-            </div>
-
-          </div>
-
-
-          <div class="formation-row back-row">
-
-            <div
-              class="formation-slot"
-              data-slot="2">
-
-              <span>3</span>
-              <div class="slot-empty">+</div>
-
-            </div>
-
-            <div
-              class="formation-slot"
-              data-slot="3">
-
-              <span>4</span>
-              <div class="slot-empty">+</div>
-
-            </div>
-
-            <div
-              class="formation-slot"
-              data-slot="4">
-
-              <span>5</span>
-              <div class="slot-empty">+</div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="formation-info">
-
-          <div>
-            <span>ÖN SIRA</span>
-            <strong>2</strong>
-          </div>
-
-          <div>
-            <span>ARKA SIRA</span>
-            <strong>3</strong>
-          </div>
-
-          <div>
-            <span>MAKSİMUM</span>
-            <strong>5</strong>
-          </div>
-
-        </div>
-
-
-        <button
-          class="primary-button"
-          data-action="save-formation">
-
-          DİZİLİŞİ KAYDET
-
-        </button>
-
-      </section>
-
-
-      <!-- ===============================================
-           SUMMON
-      ================================================ -->
-
-      <section
-        id="screen-summon"
-        class="screen">
-
-        <div class="summon-stage">
-
-          <div class="summon-runes">
-            <span>◇</span>
-            <span>✦</span>
-            <span>◇</span>
-            <span>✦</span>
-          </div>
-
-          <div class="summon-title">
-            <span>LEGACY SUMMON</span>
-            <h2>UYANIŞ</h2>
-          </div>
-
-          <div
-            id="summon-portal"
-            class="summon-portal">
-
-            <div class="portal-core"></div>
-            <div class="portal-ring ring-one"></div>
-            <div class="portal-ring ring-two"></div>
-            <div class="portal-ring ring-three"></div>
-
-          </div>
-
-          <p class="summon-description">
-            Şansını dene ve güçlü kahraman parçaları kazan.
-          </p>
-
-          <div class="summon-buttons">
-
-            <button
-              class="secondary-button"
-              data-action="summon-one">
-
-              <strong>1X ÇAĞIR</strong>
-              <small>100 ◇</small>
-
-            </button>
-
-            <button
-              class="primary-button"
-              data-action="summon-ten">
-
-              <strong>10X ÇAĞIR</strong>
-              <small>900 ◇</small>
-
-            </button>
-
-          </div>
-
-          <div
-            id="summon-result"
-            class="summon-result">
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           STAGES
-      ================================================ -->
-
-      <section
-        id="screen-stages"
-        class="screen">
-
-        <div class="screen-header">
-
-          <div>
-            <span class="eyebrow">
-              CAMPAIGN
-            </span>
-
-            <h2>LANET DÜNYASI</h2>
-
-            <p>
-              Gücünü artır ve yeni bölgelerin kilidini aç.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div
-          id="stage-list"
-          class="stage-list">
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           INFINITY KAIZEN
-      ================================================ -->
-
-      <section
-        id="screen-infinity"
-        class="screen">
-
-        <div class="infinity-header">
-
-          <div class="infinity-symbol">
-            ∞
-          </div>
-
-          <span class="eyebrow">
-            ENDLESS CHALLENGE
-          </span>
-
-          <h2>INFINITY KAIZEN</h2>
+    </div>
+
+    <div class="resources">
+      <div class="resource">
+        <span class="resource-icon crystal">◆</span>
+        <strong id="gemCount">12,480</strong>
+      </div>
+      <div class="resource">
+        <span class="resource-icon coin">●</span>
+        <strong id="coinCount">385,700</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HOME -->
+    <section id="homeScreen" class="screen active">
+
+      <div class="hero-panel">
+
+        <div class="hero-copy">
+          <div class="eyebrow">SEASON 01 • ECLIPSE RISING</div>
+
+          <h1>
+            SINIRLARI<br>
+            <span>AŞ.</span>
+          </h1>
 
           <p>
-            Sonsuz kat. Sonsuz güç.
+            Gücünü geliştir. Kadronu kur. Kaizen'in sonsuz katmanlarına ilerle.
           </p>
 
+          <div class="hero-actions">
+            <button class="primary-btn" id="continueBattleBtn">
+              <span>⚔</span>
+              SAVAŞA DEVAM ET
+            </button>
+
+            <button class="secondary-btn" data-screen="charactersScreen">
+              KAHRAMANLAR
+            </button>
+          </div>
         </div>
 
+        <div class="hero-character">
+          <div class="character-aura"></div>
+          <div class="character-ring ring-1"></div>
+          <div class="character-ring ring-2"></div>
+          <div class="hero-silhouette">
+            <div class="hero-head"></div>
+            <div class="hero-hair"></div>
+            <div class="hero-body"></div>
+            <div class="hero-cloak"></div>
+            <div class="hero-energy"></div>
+          </div>
+          <div class="hero-name">
+            <span>ASCENDANT</span>
+            <strong>KAEL VEYRON</strong>
+          </div>
+        </div>
 
-        <div class="tower-card">
+        <div class="daily-panel">
+          <div class="daily-title">GÜNLÜK İLERLEME</div>
 
-          <div class="tower-floor-label">
-            MEVCUT KAT
+          <div class="progress-line">
+            <span>KAIZEN 27</span>
+            <span>28</span>
           </div>
 
-          <div
-            id="infinity-floor"
-            class="tower-floor">
-
-            1
-
+          <div class="progress-track">
+            <div class="progress-fill" style="width:72%"></div>
           </div>
 
-          <div
-            id="infinity-enemy"
-            class="tower-enemy">
+          <div class="daily-reward">
+            <div class="reward-orb">◆</div>
+            <div>
+              <strong>Günlük Ödül</strong>
+              <span>+250 Kristal</span>
+            </div>
+          </div>
+        </div>
 
-            LANETLİ VARLIK
+      </div>
 
+      <div class="home-panels">
+
+        <button class="mode-card kaizen-card" id="kaizenBtn">
+          <div class="mode-icon">∞</div>
+          <div class="mode-text">
+            <span>SONSUZ İLERLEME</span>
+            <strong>INFINITE KAIZEN</strong>
+            <small>Kat 27 • Yeni ödül hazır</small>
+          </div>
+          <div class="arrow">›</div>
+        </button>
+
+        <button class="mode-card school-card" id="schoolBtn">
+          <div class="mode-icon">✦</div>
+          <div class="mode-text">
+            <span>OKUL</span>
+            <strong>GÖLGE AKADEMİSİ</strong>
+            <small>Normal Sınıf • 7 / 10 üye</small>
+          </div>
+          <div class="arrow">›</div>
+        </button>
+
+        <button class="mode-card summon-card" id="summonBtn">
+          <div class="mode-icon">✧</div>
+          <div class="mode-text">
+            <span>ÇAĞRI</span>
+            <strong>NEBULA SUMMON</strong>
+            <small>10'lu çağrı hazır</small>
+          </div>
+          <div class="arrow">›</div>
+        </button>
+
+      </div>
+
+      <nav class="bottom-nav">
+        <button class="nav-btn active" data-screen="homeScreen">
+          <span>⌂</span>
+          ANA SAYFA
+        </button>
+
+        <button class="nav-btn" data-screen="charactersScreen">
+          <span>◈</span>
+          KAHRAMANLAR
+        </button>
+
+        <button class="nav-btn" data-screen="inventoryScreen">
+          <span>▣</span>
+          ENVANTER
+        </button>
+
+        <button class="nav-btn" data-screen="schoolScreen">
+          <span>✦</span>
+          OKUL
+        </button>
+
+        <button class="nav-btn" data-screen="kaizenScreen">
+          <span>∞</span>
+          KAIZEN
+        </button>
+      </nav>
+
+    </section>
+
+
+    <!-- CHARACTERS -->
+    <section id="charactersScreen" class="screen">
+
+      <div class="screen-header">
+        <div>
+          <span class="eyebrow">COLLECTION</span>
+          <h2>KAHRAMANLAR</h2>
+        </div>
+
+        <div class="collection-power">
+          <span>TOPLAM GÜÇ</span>
+          <strong>428,500</strong>
+        </div>
+      </div>
+
+      <div class="rarity-tabs">
+        <button class="rarity-tab active" data-rarity="ALL">TÜMÜ</button>
+        <button class="rarity-tab" data-rarity="ASCEND">ASCEND</button>
+        <button class="rarity-tab" data-rarity="UR">UR</button>
+        <button class="rarity-tab" data-rarity="SSR">SSR</button>
+        <button class="rarity-tab" data-rarity="SR">SR</button>
+        <button class="rarity-tab" data-rarity="R">R</button>
+      </div>
+
+      <div id="characterGrid" class="character-grid"></div>
+
+    </section>
+
+
+    <!-- INVENTORY -->
+    <section id="inventoryScreen" class="screen">
+
+      <div class="screen-header">
+        <div>
+          <span class="eyebrow">STORAGE</span>
+          <h2>ENVANTER</h2>
+        </div>
+      </div>
+
+      <div class="inventory-grid">
+
+        <div class="inventory-category">
+          <div class="category-head">
+            <span>GELİŞTİRME</span>
+            <strong>12 / 100</strong>
           </div>
 
-          <div class="tower-reward">
-            <span>ÖDÜL</span>
-            <strong id="infinity-reward">
-              100 ALTIN
-            </strong>
+          <div class="item-grid">
+            <div class="item-card">
+              <div class="item-art red">✦</div>
+              <strong>Kızıl Çekirdek</strong>
+              <span>x128</span>
+            </div>
+
+            <div class="item-card">
+              <div class="item-art blue">◆</div>
+              <strong>Boşluk Kristali</strong>
+              <span>x74</span>
+            </div>
+
+            <div class="item-card">
+              <div class="item-art purple">◈</div>
+              <strong>Ruh Mührü</strong>
+              <span>x52</span>
+            </div>
+
+            <div class="item-card">
+              <div class="item-art gold">✧</div>
+              <strong>Ascend Parçası</strong>
+              <span>x11</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inventory-category">
+          <div class="category-head">
+            <span>PARALAR</span>
           </div>
 
-          <button
-            class="primary-button"
-            data-action="infinity-fight">
+          <div class="currency-large">
+            <div class="currency-row">
+              <div class="currency-symbol crystal-symbol">◆</div>
+              <div>
+                <span>Kristal</span>
+                <strong>12,480</strong>
+              </div>
+            </div>
 
+            <div class="currency-row">
+              <div class="currency-symbol coin-symbol">●</div>
+              <div>
+                <span>Kaizen Coin</span>
+                <strong>385,700</strong>
+              </div>
+            </div>
+
+            <div class="currency-row">
+              <div class="currency-symbol energy-symbol">⚡</div>
+              <div>
+                <span>Enerji</span>
+                <strong>86 / 100</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SCHOOL -->
+    <section id="schoolScreen" class="screen">
+
+      <div class="school-hero">
+
+        <div class="school-emblem">✦</div>
+
+        <div>
+          <span class="eyebrow">NORMAL SINIF</span>
+          <h2>GÖLGE AKADEMİSİ</h2>
+          <p>Birlikte güçlen. Birlikte yüksel.</p>
+        </div>
+
+        <div class="school-power">
+          <span>OKUL GÜCÜ</span>
+          <strong>1,842,500</strong>
+        </div>
+
+      </div>
+
+      <div class="school-layout">
+
+        <div class="school-members panel">
+          <div class="panel-title">
+            <span>OKUL ÜYELERİ</span>
+            <strong>7 / 10</strong>
+          </div>
+
+          <div class="member-list">
+
+            <div class="member">
+              <div class="member-avatar">A</div>
+              <div>
+                <strong>Arden</strong>
+                <span>Başkan</span>
+              </div>
+              <b>428K</b>
+            </div>
+
+            <div class="member">
+              <div class="member-avatar blue-avatar">N</div>
+              <div>
+                <strong>Nexa</strong>
+                <span>Başkan Yardımcısı</span>
+              </div>
+              <b>391K</b>
+            </div>
+
+            <div class="member">
+              <div class="member-avatar purple-avatar">R</div>
+              <div>
+                <strong>Riven</strong>
+                <span>Yetkili</span>
+              </div>
+              <b>302K</b>
+            </div>
+
+            <div class="member">
+              <div class="member-avatar red-avatar">K</div>
+              <div>
+                <strong>Kiro</strong>
+                <span>Doktor</span>
+              </div>
+              <b>277K</b>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="school-actions panel">
+
+          <div class="panel-title">
+            <span>OKUL YÖNETİMİ</span>
+          </div>
+
+          <button class="school-action">
+            <span>⚔</span>
+            <div>
+              <strong>OKUL SAVAŞI</strong>
+              <small>Rakip okul bul</small>
+            </div>
+          </button>
+
+          <button class="school-action">
+            <span>◈</span>
+            <div>
+              <strong>MİRAS</strong>
+              <small>Henüz seçilmedi</small>
+            </div>
+          </button>
+
+          <button class="school-action">
+            <span>＋</span>
+            <div>
+              <strong>ÜYE DAVET ET</strong>
+              <small>3 boş kontenjan</small>
+            </div>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- KAIZEN -->
+    <section id="kaizenScreen" class="screen">
+
+      <div class="kaizen-header">
+
+        <div>
+          <span class="eyebrow">INFINITE PROTOCOL</span>
+          <h2>INFINITE KAIZEN</h2>
+          <p>Her kat bir adım. Her onuncu kat bir sınav.</p>
+        </div>
+
+        <div class="floor-display">
+          <span>MEVCUT KAT</span>
+          <strong id="floorNumber">27</strong>
+        </div>
+
+      </div>
+
+      <div class="kaizen-stage">
+
+        <div class="kaizen-orbit"></div>
+
+        <div class="kaizen-core">
+          <span>∞</span>
+        </div>
+
+        <div class="kaizen-stage-info">
+          <span id="kaizenEnemyType">GÖLGE LEJYONU</span>
+          <h3 id="kaizenEnemyName">NIGHT WARDEN</h3>
+          <p id="kaizenDescription">
+            Sonsuz protokolün 27. katı.
+          </p>
+
+          <div class="reward-preview">
+            <div>◆ +250</div>
+            <div>● +7,500</div>
+            <div>✦ +1</div>
+          </div>
+
+          <button id="kaizenBattleBtn" class="primary-btn">
             KATA GİR
+          </button>
+        </div>
 
+      </div>
+
+    </section>
+
+
+    <!-- BATTLE -->
+    <section id="battleScreen" class="screen battle-screen">
+
+      <div class="battle-top">
+
+        <div class="battle-team-label">
+          <span>ARDEN</span>
+          <strong>5 / 5</strong>
+        </div>
+
+        <div class="battle-round">
+          <span>KAIZEN</span>
+          <strong id="battleFloorLabel">27</strong>
+        </div>
+
+        <div class="battle-team-label enemy">
+          <span id="enemyLabel">NIGHT LEGION</span>
+          <strong>5 / 5</strong>
+        </div>
+
+      </div>
+
+      <canvas id="battleCanvas"></canvas>
+
+      <div id="damageLayer"></div>
+
+      <div class="battle-vignette"></div>
+
+      <div class="battle-status">
+
+        <div class="active-character-info">
+          <div class="active-avatar" id="activeAvatar">K</div>
+
+          <div>
+            <strong id="activeCharacterName">Kael Veyron</strong>
+
+            <div class="stat-line">
+              <div class="hp-bar">
+                <div id="playerHP" class="hp-fill"></div>
+              </div>
+              <span id="playerHPText">100 / 100</span>
+            </div>
+
+            <div class="stat-line">
+              <div class="energy-bar">
+                <div id="playerEnergy" class="energy-fill"></div>
+              </div>
+              <span id="playerEnergyText">0 / 100</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="battle-controls">
+
+          <button id="basicAttackBtn" class="battle-button basic">
+            <span>✦</span>
+            <small>SALDIRI</small>
+          </button>
+
+          <button id="skillBtn" class="battle-button skill">
+            <span>◈</span>
+            <small>YETENEK</small>
+          </button>
+
+          <button id="ultimateBtn" class="battle-button ultimate">
+            <span>∞</span>
+            <small>ULTIMATE</small>
           </button>
 
         </div>
 
+        <button id="autoBattleBtn" class="auto-btn">
+          AUTO
+        </button>
 
-        <div class="tower-milestones">
+      </div>
 
-          <div>
-            <span>10</span>
-            <small>BOSS</small>
-          </div>
+      <div id="battleAnnouncement" class="battle-announcement">
+        <span></span>
+      </div>
 
-          <div>
-            <span>20</span>
-            <small>BOSS</small>
-          </div>
+      <button id="exitBattleBtn" class="battle-exit">×</button>
 
-          <div>
-            <span>30</span>
-            <small>BOSS</small>
-          </div>
+    </section>
 
-          <div>
-            <span>100</span>
-            <small>EPİK BOSS</small>
-          </div>
+  </main>
 
-        </div>
+</div>
 
-      </section>
+<div id="toast"></div>
 
-
-      <!-- ===============================================
-           CLAN
-      ================================================ -->
-
-      <section
-        id="screen-clan"
-        class="screen">
-
-        <div class="screen-header">
-
-          <div>
-            <span class="eyebrow">
-              SOCIAL
-            </span>
-
-            <h2>OKUL / KLAN</h2>
-
-            <p>
-              Klanını büyüt, mirasını seç ve diğer klanlarla savaş.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div class="clan-card">
-
-          <div class="clan-emblem">
-            ◈
-          </div>
-
-          <div class="clan-main">
-
-            <span class="eyebrow">
-              KLANSIZ
-            </span>
-
-            <h3>
-              Henüz bir okulun yok
-            </h3>
-
-            <p>
-              Bir okula katıl veya kendi okulunu oluştur.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="clan-features">
-
-          <div>
-            <strong>90</strong>
-            <span>MAKS. ÜYE</span>
-          </div>
-
-          <div>
-            <strong>0</strong>
-            <span>BAĞIŞ</span>
-          </div>
-
-          <div>
-            <strong>—</strong>
-            <span>MİRAS</span>
-          </div>
-
-        </div>
-
-
-        <div class="clan-actions">
-
-          <button class="secondary-button">
-            OKUL BUL
-          </button>
-
-          <button class="primary-button">
-            OKUL OLUŞTUR
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           RANKING
-      ================================================ -->
-
-      <section
-        id="screen-ranking"
-        class="screen">
-
-        <div class="screen-header">
-
-          <div>
-            <span class="eyebrow">
-              COMPETITIVE
-            </span>
-
-            <h2>DÜNYA SIRALAMASI</h2>
-
-            <p>
-              Dünyanın en güçlü oyuncularıyla yarış.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div class="ranking-tabs">
-
-          <button class="active">
-            OYUNCULAR
-          </button>
-
-          <button>
-            KLANLAR
-          </button>
-
-          <button>
-            ARENA
-          </button>
-
-        </div>
-
-
-        <div
-          id="ranking-list"
-          class="ranking-list">
-        </div>
-
-      </section>
-
-
-      <!-- ===============================================
-           PROFILE
-      ================================================ -->
-
-      <section
-        id="screen-profile"
-        class="screen">
-
-        <div class="profile-header">
-
-          <div class="profile-avatar">
-            <span>CL</span>
-          </div>
-
-          <div>
-
-            <span class="eyebrow">
-              PLAYER PROFILE
-            </span>
-
-            <h2 id="profile-name">
-              PLAYER
-            </h2>
-
-            <p>
-              Seviye
-              <strong id="profile-level">1</strong>
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="profile-stats">
-
-          <div>
-            <span>GÜÇ</span>
-            <strong id="profile-power">0</strong>
-          </div>
-
-          <div>
-            <span>GALİBİYET</span>
-            <strong id="profile-wins">0</strong>
-          </div>
-
-          <div>
-            <span>MAĞLUBİYET</span>
-            <strong id="profile-losses">0</strong>
-          </div>
-
-          <div>
-            <span>KAHRAMAN</span>
-            <strong id="profile-heroes">0</strong>
-          </div>
-
-        </div>
-
-
-        <div class="profile-menu">
-
-          <button>
-            HESAP
-            <span>›</span>
-          </button>
-
-          <button>
-            BAŞARIMLAR
-            <span>›</span>
-          </button>
-
-          <button>
-            İSTATİSTİKLER
-            <span>›</span>
-          </button>
-
-          <button>
-            AYARLAR
-            <span>›</span>
-          </
+<script src="script.js"></script>
+</body>
+          </html>
