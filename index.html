@@ -1,140 +1,385 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jujutsu: Curse Empire</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jujutsu: Curse Empire</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      min-height: 100vh;
-      background: #080810;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+body{
+  background:#07070d;
+  color:white;
+  font-family:Arial,sans-serif;
+}
 
-    .game {
-      width: 100%;
-      max-width: 500px;
-      min-height: 100vh;
-      padding: 25px 18px;
-      background: linear-gradient(180deg, #111122, #07070d);
-      text-align: center;
-    }
+#app{
+  width:100%;
+  max-width:500px;
+  min-height:100vh;
+  margin:auto;
+  background:linear-gradient(180deg,#111124,#07070d);
+}
 
-    .logo {
-      margin-top: 70px;
-      font-size: 38px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
+header{
+  padding:22px 18px;
+  border-bottom:1px solid #292943;
+}
 
-    .subtitle {
-      margin-top: 8px;
-      color: #aaa;
-      font-size: 14px;
-    }
+.logo{
+  font-size:25px;
+  font-weight:900;
+}
 
-    .menu {
-      margin-top: 60px;
-      display: grid;
-      gap: 14px;
-    }
+.logo span{
+  color:#9b5cff;
+}
 
-    button {
-      border: none;
-      border-radius: 14px;
-      padding: 17px;
-      font-size: 17px;
-      font-weight: bold;
-      color: white;
-      background: linear-gradient(135deg, #5b21b6, #7c3aed);
-      box-shadow: 0 5px 20px rgba(124, 58, 237, .25);
-      cursor: pointer;
-    }
+.player{
+  margin-top:15px;
+  padding:15px;
+  background:#18182b;
+  border-radius:16px;
+}
 
-    button:active {
-      transform: scale(.97);
-    }
+.level{
+  color:#b88cff;
+  margin-top:5px;
+}
 
-    .profile {
-      margin-top: 45px;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
-    }
+.xpbar{
+  height:8px;
+  background:#292943;
+  border-radius:10px;
+  margin-top:10px;
+  overflow:hidden;
+}
 
-    .level {
-      color: #c4b5fd;
-      margin-top: 6px;
-    }
+.xp{
+  width:35%;
+  height:100%;
+  background:#8b5cf6;
+}
 
-    .currency {
-      margin-top: 12px;
-      color: #facc15;
-    }
-  </style>
+.money{
+  margin-top:10px;
+  color:#ffd43b;
+}
+
+.menu{
+  padding:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  padding:17px 10px;
+  border:0;
+  border-radius:15px;
+  color:white;
+  background:#19192c;
+  border:1px solid #30304c;
+  font-size:15px;
+  font-weight:bold;
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+.main{
+  padding:0 18px 25px;
+}
+
+.card{
+  background:#18182b;
+  border-radius:18px;
+  padding:18px;
+  margin-top:15px;
+  border:1px solid #292943;
+}
+
+.character{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.power{
+  color:#ff5757;
+}
+
+.hidden{
+  display:none;
+}
+
+.back{
+  margin-top:20px;
+  width:100%;
+  background:#292943;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="game">
+<div id="app">
 
-    <div class="logo">
-      CURSE EMPIRE
-    </div>
+<header>
 
-    <div class="subtitle">
-      Jujutsu Online RPG
-    </div>
+<div class="logo">
+JUJUTSU: <span>CURSE EMPIRE</span>
+</div>
 
-    <div class="profile">
-      <h2>👤 TUNAHAN</h2>
-      <div class="level">Level 1</div>
-      <div class="currency">💰 1,000 Yen</div>
-    </div>
+<div class="player">
 
-    <div class="menu">
-      <button onclick="startGame()">⚔️ OYNA</button>
-      <button onclick="profile()">👤 PROFİL</button>
-      <button onclick="characters()">🧑‍🎤 KARAKTERLER</button>
-      <button onclick="packs()">📦 PAKETLER</button>
-      <button onclick="arena()">🏆 ARENA</button>
-    </div>
+<b>👤 TUNAHAN</b>
 
-  </div>
+<div class="level">
+Level 1
+</div>
 
-  <script>
-    function startGame() {
-      alert("🔥 Curse Empire başlıyor!");
-    }
+<div class="xpbar">
+<div class="xp"></div>
+</div>
 
-    function profile() {
-      alert("👤 Profil sistemi yakında!");
-    }
+<div class="money">
+💰 1,000 Yen
+</div>
 
-    function characters() {
-      alert("🧑‍🎤 Karakter sistemi yakında!");
-    }
+</div>
 
-    function packs() {
-      alert("📦 Paket sistemi yakında!");
-    }
+</header>
 
-    function arena() {
-      alert("🏆 Arena sistemi yakında!");
-    }
-  </script>
+<div id="home">
+
+<div class="menu">
+
+<button onclick="show('profile')">
+👤 Profil
+</button>
+
+<button onclick="show('characters')">
+⚔️ Karakterler
+</button>
+
+<button onclick="show('packs')">
+📦 Paketler
+</button>
+
+<button onclick="show('arena')">
+🏆 Arena
+</button>
+
+<button onclick="show('daily')">
+🎁 Günlük Ödül
+</button>
+
+<button onclick="alert('🌍 Dünya sıralaması yakında!')">
+🌍 Dünya Sıralaması
+</button>
+
+</div>
+
+</div>
+
+<div id="profile" class="main hidden">
+
+<div class="card">
+
+<h2>👤 TUNAHAN</h2>
+
+<p style="margin-top:10px">
+👑 Unvan: Yeni Büyücü
+</p>
+
+<p style="margin-top:8px">
+🏆 Arena: Bronz
+</p>
+
+<p style="margin-top:8px">
+🌍 Dünya: #???
+</p>
+
+<p style="margin-top:8px">
+💪 En Güçlü Karakter: Henüz yok
+</p>
+
+</div>
+
+<button class="back" onclick="home()">
+⬅️ Geri
+</button>
+
+</div>
+
+<div id="characters" class="main hidden">
+
+<h2>⚔️ Karakterler</h2>
+
+<div class="card character">
+<div>
+<b>🔴 Sukuna</b>
+<p>Level 1</p>
+</div>
+<div class="power">
+Güç 100
+</div>
+</div>
+
+<div class="card character">
+<div>
+<b>🔵 Gojo</b>
+<p>Level 1</p>
+</div>
+<div class="power">
+Güç 100
+</div>
+</div>
+
+<div class="card character">
+<div>
+<b>👊 Yuji</b>
+<p>Level 1</p>
+</div>
+<div class="power">
+Güç 50
+</div>
+</div>
+
+<button class="back" onclick="home()">
+⬅️ Geri
+</button>
+
+</div>
+
+<div id="packs" class="main hidden">
+
+<h2>📦 Paketler</h2>
+
+<div class="card">
+
+<h3>🔥 Cursed Pack</h3>
+
+<p style="margin-top:10px">
+Karakter veya geliştirme eşyası kazan!
+</p>
+
+<button style="margin-top:15px;width:100%"
+onclick="openPack()">
+📦 Paket Aç — 100 💎
+</button>
+
+<p id="packResult" style="margin-top:15px"></p>
+
+</div>
+
+<button class="back" onclick="home()">
+⬅️ Geri
+</button>
+
+</div>
+
+<div id="arena" class="main hidden">
+
+<h2>🏆 Arena</h2>
+
+<div class="card">
+
+<p>🎟️ Arena Bileti: 5</p>
+
+<p style="margin-top:10px">
+🏆 Arena Puanı: 0
+</p>
+
+<p style="margin-top:10px">
+🥉 Bronz
+</p>
+
+<button style="margin-top:15px;width:100%"
+onclick="alert('Rakip aranıyor...')">
+⚔️ Savaşa Gir
+</button>
+
+</div>
+
+<button class="back" onclick="home()">
+⬅️ Geri
+</button>
+
+</div>
+
+<div id="daily" class="main hidden">
+
+<h2>🎁 Günlük Ödül</h2>
+
+<div class="card">
+
+<h3>🔥 Gün 1</h3>
+
+<p style="margin-top:10px">
+💰 1,000 Yen
+</p>
+
+<button style="margin-top:15px;width:100%"
+onclick="alert('🎁 Ödül alındı!')">
+Ödülü Al
+</button>
+
+</div>
+
+<button class="back" onclick="home()">
+⬅️ Geri
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function hideAll(){
+
+document.querySelectorAll(
+"#home,#profile,#characters,#packs,#arena,#daily"
+).forEach(x=>{
+x.classList.add("hidden");
+});
+
+}
+
+function show(id){
+
+hideAll();
+
+document.getElementById(id)
+.classList.remove("hidden");
+
+}
+
+function home(){
+
+hideAll();
+
+document.getElementById("home")
+.classList.remove("hidden");
+
+}
+
+function openPack(){
+
+document.getElementById("packResult")
+innerText="🎉 Tebrikler! Paket açma sistemi çalışıyor.";
+
+}
+
+</script>
 
 </body>
 </html>
